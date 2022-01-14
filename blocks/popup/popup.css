@@ -1,7 +1,6 @@
 .popup {
-    visibility: hidden;
+    display: none;
     color: #000;
-    display: flex;
     position: fixed;
     width: 100%;
     height: 100%;

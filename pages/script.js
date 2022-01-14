@@ -1,31 +1,22 @@
-const profileOpenPopupButton = document.querySelector('.profile__edit-button');
-const popup = document.querySelector('.popup');
-const popupCloseButton = document.querySelector('.popup__close-icon');
-const popupSubmitButton = document.querySelector('.popup__submit-button');
-
+let formElement = document.querySelector('.popup');
+let nameInput = document.querySelector('.popup__field-name');
+let jobInput = document.querySelector('.popup__field-about');
+let profileOpenPopupButton = document.querySelector('.profile__edit-button');
+let popupCloseButton = document.querySelector('.popup__close-icon');
+let popupSubmitButton = document.querySelector('.popup__submit-button');
 function OpenPopup() {
-    console.log("Открыть");
-    popup.classList.add('popup__open');
+    formElement.classList.add('popup_opened');
 }
-
 function ClosePopup() {
-    console.log("Закрыть");
-    popup.classList.remove('popup__open');
+    formElement.classList.remove('popup_opened');
 }
-
-function SubmitButton() {
-    console.log("Сохранить");
-    let popupFieldName = document.querySelector('.popup__field-name').value;
-    console.log(popupFieldName);
-    document.querySelector('.profile__title').textContent = popupFieldName;
-
-    let popupFieldAbout = document.querySelector('.popup__field-about').value;
-    console.log(popupFieldAbout);
-    document.querySelector('.profile__subtitle').textContent = popupFieldAbout;
-
+function formSubmitHandler(evt) {
+    evt.preventDefault();
+    document.querySelector('.profile__title').textContent = nameInput.value;
+    document.querySelector('.profile__subtitle').textContent = jobInput.value;
     ClosePopup();
 }
-
 profileOpenPopupButton.addEventListener('click', OpenPopup);
 popupCloseButton.addEventListener('click', ClosePopup);
-popupSubmitButton.addEventListener('click', SubmitButton);
+popupSubmitButton.addEventListener('click', formSubmitHandler);
+formElement.addEventListener('submit', formSubmitHandler);
