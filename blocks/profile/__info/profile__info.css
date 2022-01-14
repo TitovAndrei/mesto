@@ -12,10 +12,6 @@
     justify-items: start;
 }
 
-@media screen and (max-width: 1200px) {
-    .profile__info {}
-}
-
 @media screen and (max-width: 1023px) {
     .profile__info {
         padding: 0px 133px 0px 30px;
@@ -27,7 +23,8 @@
         grid-template-columns: 198px 18px;
         max-width: 282px;
         max-height: 54px;
-        margin: 26px auto 36px auto;
+        margin: 24px 0px 36px 19px;
         padding: 0px 0px 0px 0px;
+        gap: 3px 6px;
     }
 }

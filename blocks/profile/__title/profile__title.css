@@ -7,23 +7,11 @@
     line-height: 48px;
 }
 
-@media screen and (max-width: 1200px) {
-    .profile__title {
-
-    }
-}
-
-@media screen and (max-width: 1023px) {
-    .profile__title {
-
-    }
-}
-
 @media screen and (max-width: 767px) {
     .profile__title {
         font-weight: 500;
         font-size: 27px;
         line-height: 33px;
-        text-align: center;   
+        text-align: center;
     }
 }

@@ -9,3 +9,9 @@
     padding-bottom: 9px;
     margin: 29px auto 0px auto;
 }
+
+@media screen and (max-width: 570px) {
+    .popup__field-about {
+        width: 238px;
+    }
+}
