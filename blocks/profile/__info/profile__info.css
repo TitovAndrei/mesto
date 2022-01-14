@@ -1,0 +1,33 @@
+.profile__info {
+    display: grid;
+    gap: 3px 16px;
+    grid-template-columns: 294px 24px;
+    grid-template-rows: repeat(2, auto);
+    max-width: 336px;
+    max-height: 73px;
+    margin: 0;
+    padding: 0px 244px 0px 30px;
+    justify-content: center;
+    align-items: center;
+    justify-items: start;
+}
+
+@media screen and (max-width: 1200px) {
+    .profile__info {}
+}
+
+@media screen and (max-width: 1023px) {
+    .profile__info {
+        padding: 0px 133px 0px 30px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .profile__info {
+        grid-template-columns: 198px 18px;
+        max-width: 282px;
+        max-height: 54px;
+        margin: 26px auto 36px auto;
+        padding: 0px 0px 0px 0px;
+    }
+}
