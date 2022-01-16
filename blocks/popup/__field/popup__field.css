@@ -1,17 +1,17 @@
-.popup__field-name {
+.popup__field {
     font-style: normal;
     font-weight: normal;
     font-size: 14px;
     line-height: 17px;
-    border: 0;
-    margin: 47px auto 0px auto;
+    border: none;
+    border-bottom: 1px rgba(0, 0, 0, 0.3) solid;
     width: 358px;
     padding-bottom: 9px;
+    margin: 4px auto 22px auto;
 }
 
 @media screen and (max-width: 570px) {
-    .popup__field-name {
+    .popup__field {
         width: 238px;
-        margin: 74px auto 0px auto;
     }
 }

@@ -4,12 +4,10 @@
     grid-template-columns: 294px 24px;
     grid-template-rows: repeat(2, auto);
     max-width: 336px;
-    max-height: 73px;
     margin: 0;
     padding: 0px 244px 0px 30px;
     justify-content: center;
     align-items: center;
-    justify-items: start;
 }
 
 @media screen and (max-width: 1023px) {
@@ -22,9 +20,8 @@
     .profile__info {
         grid-template-columns: 198px 18px;
         max-width: 282px;
-        max-height: 54px;
-        margin: 24px 0px 36px 19px;
+        margin: 24px 0px 34px 23px;
         padding: 0px 0px 0px 0px;
-        gap: 3px 6px;
+        gap: 4px 1px;
     }
 }

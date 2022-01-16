@@ -11,11 +11,12 @@
     padding-top: 14px;
     padding-bottom: 18px;
     border: none;
-    margin: 47px auto 37px auto;
+    margin: 25px auto 35px auto;
+    border-radius: 2px;
 }
 
 .popup__submit-button:hover {
-    opacity: 0.6;
+    opacity: 0.8;
     cursor: pointer;
 }
 

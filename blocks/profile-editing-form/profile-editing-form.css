@@ -1,0 +1,5 @@
+.profile-editing-form {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
