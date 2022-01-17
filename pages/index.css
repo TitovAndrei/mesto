@@ -27,4 +27,4 @@
 @import url(../blocks/popup/__title/popup__title.css);
 @import url(../blocks/popup/__container/popup__container.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
-@import url(../blocks/profile-editing-form/profile-editing-form.css);
+@import url(../blocks/popup/__profile-editing-form/popup__profile-editing-form.css);

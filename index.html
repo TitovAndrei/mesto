@@ -85,11 +85,11 @@
   </div>
   <div class="popup">
     <div class="popup__container">
-      <button class="popup__close-icon" type="reset" aria-label="Кнопка закрытия формы"></button>
+      <button class="popup__close-icon" type="button" aria-label="Кнопка закрытия формы"></button>
       <h3 class="popup__title">Редактировать профиль</h3>
-      <form autocomplete="on" name="profile-editing-form" class="profile-editing-form">
-        <input type="text" value="Жак-Ив Кусто" class="popup__field popup__field-name">
-        <input type="text" value="Исследователь океана" class="popup__field popup__field-job">
+      <form autocomplete="on" name="profile-editing-form" class="popup__profile-editing-form">
+        <input type="text" name="field_name" value="Жак-Ив Кусто" class="popup__field popup__field_text_name">
+        <input type="text" name="field_job" value="Исследователь океана" class="popup__field popup__field_text_job">
         <button name="submit-button" class="popup__submit-button" type="submit"
           aria-label="Кнопка сохранения формы">Сохранить</button>
       </form>
