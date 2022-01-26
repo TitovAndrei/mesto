@@ -1,0 +1,17 @@
+.element__del {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    border: none;
+    background-image: url(../../../images/del.svg);
+    background-color: rgba(0, 0, 0, 0);
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 32px;
+    height: 32px;
+}
+
+.element__del:hover {
+    opacity: 0.6;
+    cursor: pointer;
+}

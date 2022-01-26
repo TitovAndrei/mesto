@@ -29,6 +29,8 @@
 
       <section class="elements">
         <article class="element">
+          <button class="element__del" type="button"
+              aria-label="Кнопка удаления карточки"></button>
           <img src="images/element__image_chercessk.jpg" alt="Фото крепости в Карачаевске" class="element__mask-group">
           <div class="element__info">
             <h3 class="element__title">Карачаевск</h3>
@@ -37,6 +39,8 @@
           </div>
         </article>
         <article class="element">
+          <button class="element__del" type="button"
+              aria-label="Кнопка удаления карточки"></button>
           <img src="images/element__image_elbrus.png" alt="Фото горы Эльбрус" class="element__mask-group">
           <div class="element__info">
             <h3 class="element__title">Гора Эльбрус</h3>
@@ -45,6 +49,8 @@
           </div>
         </article>
         <article class="element">
+          <button class="element__del" type="button"
+              aria-label="Кнопка удаления карточки"></button>
           <img src="images/element__image_dombai.png" alt="Фото горы Домбай" class="element__mask-group">
           <div class="element__info">
             <h3 class="element__title">Домбай</h3>
@@ -53,6 +59,8 @@
           </div>
         </article>
         <article class="element">
+          <button class="element__del" type="button"
+              aria-label="Кнопка удаления карточки"></button>
           <img src="images/element__image_elbrus.png" alt="Фото горы Эльбрус" class="element__mask-group">
           <div class="element__info">
             <h3 class="element__title">Гора Эльбрус</h3>
@@ -61,6 +69,8 @@
           </div>
         </article>
         <article class="element">
+          <button class="element__del" type="button"
+              aria-label="Кнопка удаления карточки"></button>
           <img src="images/element__image_dombai.png" alt="Фото горы Домбай" class="element__mask-group">
           <div class="element__info">
             <h3 class="element__title">Домбай</h3>
@@ -69,6 +79,8 @@
           </div>
         </article>
         <article class="element">
+          <button class="element__del" type="button"
+              aria-label="Кнопка удаления карточки"></button>
           <img src="images/element__image_chercessk.jpg" alt="Фото крепости в Карачаевске" class="element__mask-group">
           <div class="element__info">
             <h3 class="element__title">Карачаево-Черкесск</h3>
@@ -83,7 +95,7 @@
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
   </div>
-  <div class="popup">
+  <!-- <div class="popup">
     <div class="popup__container">
       <button class="popup__close-icon" type="button" aria-label="Кнопка закрытия формы"></button>
       <h3 class="popup__title">Редактировать профиль</h3>
@@ -92,6 +104,18 @@
         <input type="text" name="field_job" value="Исследователь океана" class="popup__field popup__field_text_job">
         <button name="submit-button" class="popup__submit-button" type="submit"
           aria-label="Кнопка сохранения формы">Сохранить</button>
+      </form>
+    </div>
+  </div> -->
+  <div class="popup">
+    <div class="popup__container">
+      <button class="popup__close-icon" type="button" aria-label="Кнопка закрытия формы"></button>
+      <h3 class="popup__title">Новое место</h3>
+      <form autocomplete="on" name="profile-editing-form" class="popup__profile-editing-form">
+        <input type="text" name="field_name" value="Название" class="popup__field popup__field_text_title">
+        <input type="text" name="field_job" value="Ссылка на картинку" class="popup__field popup__field_text_image">
+        <button name="submit-button" class="popup__submit-button" type="submit"
+          aria-label="Кнопка создание карточки">Сохранить</button>
       </form>
     </div>
   </div>
