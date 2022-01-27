@@ -31,10 +31,9 @@
         <template id = "element">
           <article class="element">
             <button class="element__del" type="button" aria-label="Кнопка удаления карточки"></button>
-            <img src="images/element__image_chercessk.jpg" alt="Фото крепости в Карачаевске"
-              class="element__mask-group">
+            <img src="" alt="Фото" class="element__mask-group">
             <div class="element__info">
-              <h3 class="element__title">Карачаевск</h3>
+              <h3 class="element__title"></h3>
               <button class="element__group" type="button"
                 aria-label="Кнопка отметки о том, что карточка понравилась"></button>
             </div>
@@ -47,7 +46,7 @@
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
   </div>
-  <!-- <div class="popup">
+  <div class="popup popup_edit-profile">
     <div class="popup__container">
       <button class="popup__close-icon" type="button" aria-label="Кнопка закрытия формы"></button>
       <h3 class="popup__title">Редактировать профиль</h3>
@@ -58,15 +57,15 @@
           aria-label="Кнопка сохранения формы">Сохранить</button>
       </form>
     </div>
-  </div> -->
-  <div class="popup">
+  </div>
+  <div class="popup popup_add-element">
     <div class="popup__container">
       <button class="popup__close-icon" type="button" aria-label="Кнопка закрытия формы"></button>
       <h3 class="popup__title">Новое место</h3>
-      <form autocomplete="on" name="profile-editing-form" class="popup__profile-editing-form">
-        <input type="text" name="field_name" value="Название" class="popup__field popup__field_text_title">
-        <input type="text" name="field_job" value="Ссылка на картинку" class="popup__field popup__field_text_image">
-        <button name="submit-button" class="popup__submit-button" type="submit"
+      <form autocomplete="on" name="element-add-form" class="popup__element-add-form">
+        <input type="text" name="field_image" value="Ссылка на картинку" class="popup__field popup__field_text_image">
+        <input type="text" name="field_stitle" value="Название" class="popup__field popup__field_text_title">
+        <button name="Edit-button" class="popup__submit-button" type="submit"
           aria-label="Кнопка создание карточки">Сохранить</button>
       </form>
     </div>

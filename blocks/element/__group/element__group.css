@@ -16,6 +16,3 @@
     cursor: pointer;
 }
 
-.element__group:focus {
-    background-image: url(../../../images/Union.png);
-}
