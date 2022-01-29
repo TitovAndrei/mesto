@@ -31,7 +31,7 @@
         <template id = "element">
           <article class="element">
             <button class="element__del" type="button" aria-label="Кнопка удаления карточки"></button>
-            <img src="" alt="Фото" class="element__mask-group">
+            <img alt="Фото" class="element__mask-group">
             <div class="element__info">
               <h3 class="element__title"></h3>
               <button class="element__group" type="button"
@@ -50,10 +50,10 @@
     <div class="popup__container">
       <button class="popup__close-icon" type="button" aria-label="Кнопка закрытия формы"></button>
       <h3 class="popup__title">Редактировать профиль</h3>
-      <form autocomplete="on" name="profile-editing-form" class="popup__profile-editing-form">
+      <form autocomplete="on" name="profile-editing-form" class="popup__form popup__form_profile-editing">
         <input type="text" name="field_name" value="Жак-Ив Кусто" class="popup__field popup__field_text_name">
         <input type="text" name="field_job" value="Исследователь океана" class="popup__field popup__field_text_job">
-        <button name="submit-button" class="popup__submit-button" type="submit"
+        <button name="submit-button" class="popup__submit-button popup__submit-button_profile" type="submit"
           aria-label="Кнопка сохранения формы">Сохранить</button>
       </form>
     </div>
@@ -62,10 +62,10 @@
     <div class="popup__container">
       <button class="popup__close-icon" type="button" aria-label="Кнопка закрытия формы"></button>
       <h3 class="popup__title">Новое место</h3>
-      <form autocomplete="on" name="element-add-form" class="popup__element-add-form">
-        <input type="text" name="field_image" value="Ссылка на картинку" class="popup__field popup__field_text_image">
-        <input type="text" name="field_stitle" value="Название" class="popup__field popup__field_text_title">
-        <button name="Edit-button" class="popup__submit-button" type="submit"
+      <form autocomplete="on" name="element-add-form" class="popup__form popup__form_element-add">
+        <input type="text" name="field_title" placeholder="Название" class="popup__field popup__field_text_title">
+        <input type="src" name="field_image" placeholder="Ссылка на картинку" class="popup__field popup__field_text_image">
+        <button name="edit-button" class="popup__submit-button popup__submit-button_element" type="submit"
           aria-label="Кнопка создание карточки">Сохранить</button>
       </form>
     </div>
