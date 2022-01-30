@@ -11,9 +11,9 @@ let profileOpenPopupButton = document.querySelector('.profile__edit-button');
 let profileAddButton = document.querySelector('.profile__add-button');
 const element = document.querySelector('#element').content;
 const elements = document.querySelector('.elements');
-let popupEditProfileClose = document.querySelector('.popup_edit-profile_closes');
-let popupAddElementClose = document.querySelector('.popup_add-element_closes');
-let popupImageClose = document.querySelector('.popup_image_closes');
+let popupEditProfileClose = document.querySelector('.popup__close-icon_edit-profile');
+let popupAddElementClose = document.querySelector('.popup__close-icon_add-element');
+let popupImageClose = document.querySelector('.popup__container_image');
 let item;
 
 //Начальный массив карточек
