@@ -28,7 +28,7 @@
       </section>
 
       <section class="elements">
-        <template id = "element">
+        <template id="element">
           <article class="element">
             <button class="element__del" type="button" aria-label="Кнопка удаления карточки"></button>
             <img alt="Фото" class="element__mask-group">
@@ -48,7 +48,8 @@
   </div>
   <div class="popup popup_edit-profile">
     <div class="popup__container">
-      <button class="popup__close-icon popup_edit-profile_close" type="button" aria-label="Кнопка закрытия формы"></button>
+      <button class="popup__close-icon popup_edit-profile_closes" type="button"
+        aria-label="Кнопка закрытия формы"></button>
       <h3 class="popup__title">Редактировать профиль</h3>
       <form autocomplete="on" name="profile-editing-form" class="popup__form popup__form_profile-editing">
         <input type="text" name="field_name" value="Жак-Ив Кусто" class="popup__field popup__field_text_name">
@@ -60,11 +61,13 @@
   </div>
   <div class="popup popup_add-element">
     <div class="popup__container">
-      <button class="popup__close-icon popup_add-element_close" type="button" aria-label="Кнопка закрытия формы"></button>
+      <button class="popup__close-icon popup_add-element_closes" type="button"
+        aria-label="Кнопка закрытия формы"></button>
       <h3 class="popup__title">Новое место</h3>
       <form autocomplete="on" name="element-add-form" class="popup__form popup__form_element-add">
         <input type="text" name="field_title" placeholder="Название" class="popup__field popup__field_text_title">
-        <input type="src" name="field_image" placeholder="Ссылка на картинку" class="popup__field popup__field_text_image">
+        <input type="src" name="field_image" placeholder="Ссылка на картинку"
+          class="popup__field popup__field_text_image">
         <button name="edit-button" class="popup__submit-button popup__submit-button_element" type="submit"
           aria-label="Кнопка создание карточки">Сохранить</button>
       </form>
@@ -72,7 +75,7 @@
   </div>
   <div class="popup popup_image">
     <div class="popup__container popup__container_image">
-      <button class="popup__close-icon popup_image_close" type="button" aria-label="Кнопка закрытия формы"></button>
+      <button class="popup__close-icon popup_image_closes" type="button" aria-label="Кнопка закрытия формы"></button>
       <img class="popup__image" src="https://personaspb.com/assets/images/novosti/1_19.jpg" alt="Фотография места">
       <p class="popup__image-title"></p>
     </div>

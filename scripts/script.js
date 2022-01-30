@@ -11,9 +11,9 @@ let profileOpenPopupButton = document.querySelector('.profile__edit-button');
 let profileAddButton = document.querySelector('.profile__add-button');
 const element = document.querySelector('#element').content;
 const elements = document.querySelector('.elements');
-let popupEditProfileClose = document.querySelector('.popup_edit-profile_close');
-let popupAddElementClose = document.querySelector('.popup_add-element_close');
-let popupImageClose = document.querySelector('.popup_image_close');
+let popupEditProfileClose = document.querySelector('.popup_edit-profile_closes');
+let popupAddElementClose = document.querySelector('.popup_add-element_closes');
+let popupImageClose = document.querySelector('.popup_image_closes');
 let item;
 
 //Начальный массив карточек
@@ -51,7 +51,6 @@ function itemElements() {
 }
 
 function renderElement(item) {
-  console.log(initialCards);
   const newElement = element.cloneNode(true);
   newElement.querySelector('.element__mask-group').src = item.link;
   newElement.querySelector('.element__title').textContent = item.name;
