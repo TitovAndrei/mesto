@@ -1,21 +1,22 @@
 let popupEditProfile = document.querySelector('.popup_edit-profile');
 let popupAddElement = document.querySelector('.popup_add-element');
+let popupOpenImage = document.querySelector('.popup_image');
 let profileEditingForm = document.querySelector('.popup__form_profile-editing');
 let elementAddForm = document.querySelector('.popup__form_element-add');
 let nameInput = document.querySelector('.popup__field_text_name');
 let jobInput = document.querySelector('.popup__field_text_job');
 let fieldName = document.querySelector('.profile__title');
 let fieldJob = document.querySelector('.profile__subtitle');
-let elementMaskGroup = document.querySelector('.element__mask-group');
-let elementTitle = document.querySelector('.element__title');
+// let elementMaskGroup = document.querySelector('.element__mask-group');
+// let elementTitle = document.querySelector('.element__title');
 let profileOpenPopupButton = document.querySelector('.profile__edit-button');
 let profileAddButton = document.querySelector('.profile__add-button');
-let popupCloseButton = document.querySelector('.popup__close-icon');
 const element = document.querySelector('#element').content;
 const elements = document.querySelector('.elements');
-let buttomDelElement = document.querySelector('.element__del');
-
-
+// let buttomDelElement = document.querySelector('.element__del');
+let popupEditProfileClose = document.querySelector('.popup_edit-profile_close');
+let popupAddElementClose = document.querySelector('.popup_add-element_close');
+let popupImageClose = document.querySelector('.popup_image_close');
 
 //Начальный массив карточек
 const initialCards = [
@@ -45,7 +46,6 @@ const initialCards = [
   }
 ];
 
-
 console.log(initialCards);
 // добавление карточек на страницу из начального массива при загрузке
 function itemElements() {
@@ -65,6 +65,8 @@ function renderElement(li) {
 function addElemnt(li) {
   li.querySelector('.element__del').addEventListener('click', elementDelete);
   li.querySelector('.element__group').addEventListener('click', elementGroup);
+  li.querySelector('.element__mask-group').addEventListener('click', openElementMaskGroup);
+  li.querySelector('.element__mask-group').addEventListener('click', openElementMaskGroup);
 }
 
 function elementDelete(event) {
@@ -76,23 +78,41 @@ function elementGroup(event) {
 }
 
 // открытие попапов
+//функция открытия popup просмотра фотографии
+function openElementMaskGroup (event) {
+  
+  event.target.classList.item('element__mask-group');
+  let popupImage = document.querySelector('.popup__image');
+  popupImage.src = event.srcElement.src;
+ 
+  // let popupImageTitle = document.querySelector('.popup__image-title');
+  
+  // event.classList.item('element__info');
+  // popupImageTitle.textContent = event.textContent;
+ 
+  // console.log(event);
+  openPopup(popupOpenImage);
+}
+
 // popup редактирование профиля
 function openPopupProfile() {
   nameInput.value = fieldName.textContent;
   jobInput.value = fieldJob.textContent;
   openPopup(popupEditProfile);
 }
+
 // popup добавление карточки
 function openAddPopup() {
   openPopup(popupAddElement);
 }
 
-// функция открытия
+// функция открытия popup
 function openPopup(li) {
   li.classList.remove('popup_close');
   li.classList.add('popup_opened');
 }
 
+// функция добавления карточки
 function addElemntItem(evt) {
   evt.preventDefault();
   let imageInput = document.querySelector('.popup__field_text_image').value;
@@ -106,9 +126,7 @@ function addElemntItem(evt) {
   closePopup(popupAddElement);
 }
 
-//http://mediasvod.ru/wp-content/uploads/2016/10/man.jpg
-
-//функция закрытия
+//функция закрытия popup
 function closePopup() {
   let popup = document.querySelector('.popup_opened');
   popup.classList.add('popup_close');
@@ -123,13 +141,18 @@ function formSubmitHandler(evt) {
   closePopup();
 }
 
+
+
 itemElements();
 
 profileOpenPopupButton.addEventListener('click', openPopupProfile);
 profileAddButton.addEventListener('click', openAddPopup);
-popupCloseButton.addEventListener('click', closePopup);
 elementAddForm.addEventListener('submit', addElemntItem);
 profileEditingForm.addEventListener('submit', formSubmitHandler);
+
+popupEditProfileClose.addEventListener('click', closePopup);
+popupAddElementClose.addEventListener('click', closePopup);
+popupImageClose.addEventListener('click', closePopup);
 
 
 
