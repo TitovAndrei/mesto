@@ -3,17 +3,17 @@ const popupAddElement = document.querySelector('.popup_add-element');
 const popupOpenImage = document.querySelector('.popup_image');
 const profileEditingForm = document.querySelector('.popup__form_profile-editing');
 const elementAddForm = document.querySelector('.popup__form_element-add');
-let nameInput = document.querySelector('.popup__field_text_name');
-let jobInput = document.querySelector('.popup__field_text_job');
-let fieldName = document.querySelector('.profile__title');
-let fieldJob = document.querySelector('.profile__subtitle');
+const nameInput = document.querySelector('.popup__field_text_name');
+const jobInput = document.querySelector('.popup__field_text_job');
+const fieldName = document.querySelector('.profile__title');
+const fieldJob = document.querySelector('.profile__subtitle');
 const profileOpenPopupButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
 const element = document.querySelector('#element').content;
 const elements = document.querySelector('.elements');
 const popupEditProfileClose = document.querySelector('.popup__close-icon_edit-profile');
 const popupAddElementClose = document.querySelector('.popup__close-icon_add-element');
-const popupImageClose = document.querySelector('.popup__container_image');
+const popupImageClose = document.querySelector('.popup__close-icon_image');
 const popupTitle = document.querySelector('.popup__image-title');
 const popupImage = document.querySelector('.popup__image');
 const imageInput = document.querySelector('.popup__field_text_image');
@@ -61,8 +61,9 @@ function renderElement(item) {
 
 function createCard(item) {
   const newElement = element.cloneNode(true);
-  newElement.querySelector('.element__mask-group').src = item.link;
-  newElement.querySelector('.element__mask-group').alt = item.name;
+  const image = newElement.querySelector('.element__mask-group');
+  image.src = item.link;  
+  image.alt = item.name; 
   newElement.querySelector('.element__title').textContent = item.name;
   setCardListeners(newElement);
   return newElement;
@@ -86,12 +87,10 @@ function elementGroup(event) {
 // открытие попапов
 //функция открытия popup просмотра фотографии
 function openElementMaskGroup (event) {
-  //event.target.classList.item('element__mask-group');
   const item = event.target.closest('.element');
-  const text = item.querySelector('.element__title').textContent;
   popupImage.src = event.srcElement.src;
-  popupImage.alt = text;
-  popupTitle.textContent = text;
+  popupImage.alt = event.srcElement.alt;
+  popupTitle.textContent = event.srcElement.alt;
   openPopup(popupOpenImage);
 }
 
