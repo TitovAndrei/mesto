@@ -52,9 +52,18 @@
         aria-label="Кнопка закрытия формы"></button>
       <h3 class="popup__title">Редактировать профиль</h3>
       <form autocomplete="on" name="profile-editing-form" class="popup__form popup__form_profile-editing">
-        <input type="text" name="field_name" value="Жак-Ив Кусто" class="popup__field popup__field_text_name">
-        <input type="text" name="field_job" value="Исследователь океана" class="popup__field popup__field_text_job">
-        <button name="submit-button" class="popup__submit-button popup__submit-button_profile" type="submit"
+        <label class="popup__input">
+          <input type="text" name="field_name" value="Жак-Ив Кусто" class="popup__field popup__field_text_name" required
+            minlength="2" maxlength="40">
+          <span class="popup__field_error"></span>
+        </label>
+        <label class="popup__input">
+          <input type="text" name="field_job" value="Исследователь океана" class="popup__field popup__field_text_job"
+            required minlength="2" maxlength="200">
+          <span class="popup__field_error"></span>
+        </label>
+        <button name="submit-button"
+          class="popup__submit-button popup__submit-button_disabled popup__submit-button_profile" type="submit"
           aria-label="Кнопка сохранения формы">Сохранить</button>
       </form>
     </div>
@@ -65,22 +74,32 @@
         aria-label="Кнопка закрытия формы"></button>
       <h3 class="popup__title">Новое место</h3>
       <form autocomplete="on" name="element-add-form" class="popup__form popup__form_element-add">
-        <input type="text" name="field_title" placeholder="Название" class="popup__field popup__field_text_title">
-        <input type="src" name="field_image" placeholder="Ссылка на картинку"
-          class="popup__field popup__field_text_image">
-        <button name="edit-button" class="popup__submit-button popup__submit-button_element" type="submit"
+        <label class="popup__input">
+          <input type="text" name="field_title" placeholder="Название" class="popup__field popup__field_text_title"
+            required minlength="2" maxlength="30">
+          <span class="popup__field_error"></span>
+        </label>
+        <label class="popup__input">
+          <input type="url" name="field_image" placeholder="Ссылка на картинку"
+            class="popup__field popup__field_text_image" required>
+          <span class="popup__field_error"></span>
+        </label>
+        <button name="edit-button"
+          class="popup__submit-button popup__submit-button_disabled popup__submit-button_element" type="submit"
           aria-label="Кнопка создание карточки">Сохранить</button>
       </form>
     </div>
   </div>
   <div class="popup popup_image">
     <div class="popup__container popup__container_image">
-      <button class="popup__close-icon popup__close-icon_image" type="button" aria-label="Кнопка закрытия формы"></button>
+      <button class="popup__close-icon popup__close-icon_image" type="button"
+        aria-label="Кнопка закрытия формы"></button>
       <img class="popup__image" src="https://personaspb.com/assets/images/novosti/1_19.jpg" alt="Фотография места">
       <p class="popup__image-title"></p>
     </div>
   </div>
   <script src="./scripts/script.js"></script>
+  <script src="./scripts/validate.js"></script>
 </body>
 
 </html>
