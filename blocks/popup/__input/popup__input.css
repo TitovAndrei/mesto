@@ -5,3 +5,9 @@
     flex-direction: column;
     border: none;
 }
+
+@media screen and (max-width: 570px) {
+    .popup__input {
+        width: 238px;
+    }
+}
