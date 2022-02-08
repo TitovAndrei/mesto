@@ -10,54 +10,53 @@ const enableValidation = (obj) => {
 // Находим все поля на странице
 const setEventListeners = (obj, formElement, inputElement) => {
     const fieldList = Array.from(formElement.querySelectorAll(inputElement));
+    const button = formElement.querySelector(obj.submitButtonSelector);
     fieldList.forEach((fieldElement) => {
         fieldElement.addEventListener('input', () => {
-            isValidate(obj, formElement, fieldElement)
+            isValidate(obj, fieldElement)
+            changingButtonState(obj, button, fieldList);
         });
     });
 };
 
 //проверяем на валидность
-const isValidate = (obj, formElement, fieldElement) => {
+const isValidate = (obj, fieldElement) => {
     if (!fieldElement.validity.valid) {
-        markInputError(obj, formElement, fieldElement, fieldElement.validationMessage);
+        markInputError(obj, fieldElement, fieldElement.validationMessage);
     } else {
-        hideInputError(obj, formElement, fieldElement);
+        hideInputError(obj, fieldElement);
     }
 };
 
 // подсвечиваем поле не прошедшее валидацию
-const markInputError = (obj, formElement, fieldElement, errorMessage) => {
+const markInputError = (obj, fieldElement, errorMessage) => {
     const popupInput = fieldElement.closest(obj.inputSelector);
     const errorElement = popupInput.querySelector(obj.errorSelector);
     errorElement.textContent = errorMessage;
     fieldElement.classList.add(obj.fieldErrorClass);
-    changingButtonState(obj, formElement, false);
 };
 
 // определяем поля прошедние валидацию и показывает кнопку
-const hideInputError = (obj, formElement, fieldElement) => {
+const hideInputError = (obj, fieldElement) => {
     const popupInput = fieldElement.closest(obj.inputSelector);
     const errorElement = popupInput.querySelector(obj.errorSelector);
     errorElement.textContent = null;
     fieldElement.classList.remove(obj.fieldErrorClass);
-    changingButtonState(obj, formElement, true);
-
 };
 
 // функция активации и деактевации кнопки 
-function changingButtonState(obj, formElement, boolean) {
-    const button = formElement.querySelector(obj.submitButtonSelector);
-    const valid = formElement.querySelector(`.${obj.fieldErrorClass}`);
-
-    console.log(obj.inactiveButtonClass);
-    console.log(button);
-    if (button && boolean === true && !valid) {
+function changingButtonState(obj, button, fieldList) {
+    if (hasInvalidInput(fieldList)) {
+        button.classList.add(obj.inactiveButtonClass);
+    } else {
         button.classList.remove(obj.inactiveButtonClass);
     }
-    else if (button && boolean === false && valid) {
-        button.classList.add(obj.inactiveButtonClass);
-    }
+}
+
+function hasInvalidInput(fieldList) {
+    return fieldList.some((inputElement) => {
+        return !inputElement.validity.valid;
+    })
 }
 
 // Вызовем функцию

@@ -97,100 +97,76 @@ function openElementMaskGroup(event) {
 function openPopupProfile() {
   nameInput.value = fieldName.textContent;
   jobInput.value = fieldJob.textContent;
-  const button = popupEditProfile.querySelector('.popup__submit-button_disabled');
-  if (button){
-    button.classList.remove('popup__submit-button_disabled');
-  }
+  const button = popupEditProfile.querySelector('.popup__submit-button');
+  button.classList.remove('popup__submit-button_disabled');
   openPopup(popupEditProfile);
-}
-
-// popup добавление карточки
-function openAddPopup() {
-  openPopup(popupAddElement);
 }
 
 // функция открытия popup
 function openPopup(item) {
+  if (item === popupAddElement) {
+    const button = item.querySelector('.popup__submit-button');
+    button.classList.add('popup__submit-button_disabled');
+  }
   item.classList.add('popup_opened');
-  const popupContainer = item.querySelector('.popup__container');
-  setPopupListeners(item, popupContainer);
+  document.addEventListener('keydown', popupActive);
+  setPopupListeners(item);
 }
 
-// функция определения оверлея
-function setPopupListeners(item, container) {
+//функция закрытия popup
+function closePopup(item) {
+  item.classList.remove('popup_opened');
+  document.removeEventListener('keydown', popupActive);
+}
+
+// функция определения элемента закрывающего popup
+function setPopupListeners(item) {
   item.addEventListener('click', (evt) => {
-    if (evt.srcElement.offsetParent != container && evt.srcElement != container) {
-      closePopup();
-      return;
-    }
-    else {
-      return;
+    if (evt.target.classList.contains('popup') ||
+      evt.target.classList.contains('popup__close-icon')) {
+      closePopup(item);
     }
   });
 }
 
 //функция закрытия popup по клавише Escape
-function keyHandler(evt) {
+const popupActive = (evt) => {
+  const popup = document.querySelector('.popup_opened');
   if (evt.key === 'Escape') {
-    closePopup();
+    closePopup(popup);
   }
 }
 
 // функция добавления карточки
 function setElemntItem(evt) {
-  const submitButton = elementAddForm.querySelector('.popup__submit-button_disabled');
-  if (!submitButton) {
-    evt.preventDefault();
-    const cardData =
-    {
-      name: titleInput.value,
-      link: imageInput.value
-    };
-
-    renderElement(cardData);
-    titleInput.value = null;
-    imageInput.value = null;
-    closePopup();
-  }
-  else {
-    return;
-  }
-}
-
-//функция закрытия popup
-function closePopup() {
-  const popupOpened = document.querySelector('.popup_opened');
-  if (popupOpened) {
-    popupOpened.classList.remove('popup_opened');
-  }
+  evt.preventDefault();
+  const cardData =
+  {
+    name: titleInput.value,
+    link: imageInput.value
+  };
+  renderElement(cardData);
+  titleInput.value = null;
+  imageInput.value = null;
+  const item = evt.target.closest('.popup_opened');
+  closePopup(item);
 }
 
 //функция сохранения новых значений профиля
 function handleProfileFormSubmit(evt) {
-  const submitButton = popupEditProfile.querySelector('.popup__submit-button_disabled');
-  if (!submitButton) {
-    evt.preventDefault();
-    fieldName.textContent = nameInput.value;
-    fieldJob.textContent = jobInput.value;
-    closePopup();
-  }
-  else {
-    return;
-  }
+  evt.preventDefault();
+  fieldName.textContent = nameInput.value;
+  fieldJob.textContent = jobInput.value;
+  const item = evt.target.closest('.popup_opened');
+  closePopup(item);
 }
 
 renderCards();
 
 profileOpenPopupButton.addEventListener('click', openPopupProfile);
-profileAddButton.addEventListener('click', openAddPopup);
+profileAddButton.addEventListener('click', () => openPopup(popupAddElement));
 elementAddForm.addEventListener('submit', setElemntItem);
 popupEditProfile.addEventListener('submit', handleProfileFormSubmit);
-popupEditProfileClose.addEventListener('click', closePopup);
-popupAddElementClose.addEventListener('click', closePopup);
-popupImageClose.addEventListener('click', closePopup);
-document.addEventListener('keydown', keyHandler);
-
-
-
-
-
+popupEditProfileClose.addEventListener('click', setPopupListeners(popupEditProfile));
+popupAddElementClose.addEventListener('click', setPopupListeners(popupAddElement));
+popupImageClose.addEventListener('click', setPopupListeners(popupOpenImage));
