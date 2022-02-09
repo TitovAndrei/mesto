@@ -104,13 +104,8 @@ function openPopupProfile() {
 
 // функция открытия popup
 function openPopup(item) {
-  if (item === popupAddElement) {
-    const button = item.querySelector('.popup__submit-button');
-    button.classList.add('popup__submit-button_disabled');
-  }
   item.classList.add('popup_opened');
   document.addEventListener('keydown', popupActive);
-  setPopupListeners(item);
 }
 
 //функция закрытия popup
@@ -150,6 +145,8 @@ function setElemntItem(evt) {
   imageInput.value = null;
   const item = evt.target.closest('.popup_opened');
   closePopup(item);
+  const addButton = item.querySelector('.popup__submit-button_element');
+  addButton.classList.add('popup__submit-button_disabled');
 }
 
 //функция сохранения новых значений профиля
