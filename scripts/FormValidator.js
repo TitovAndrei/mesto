@@ -59,7 +59,6 @@ function hasInvalidInput(fieldList) {
     })
 }
 
-// Вызовем функцию
 enableValidation({
     inputSelector: '.popup__input',
     formSelector: '.popup__form',
