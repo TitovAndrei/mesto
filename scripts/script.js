@@ -18,13 +18,6 @@ const fieldJob = document.querySelector('.profile__subtitle');
 const profileOpenPopupButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
 const elements = document.querySelector('.elements');
-// const inputSelector = document.querySelector('.popup__input');
-// const formSelector = document.querySelector('.popup__form');
-// const fieldSelector = document.querySelector('.popup__field');
-// const submitButtonSelector = document.querySelector('.popup__submit-button');
-// const errorSelector = document.querySelector('.popup__field-error');
-// const inactiveButtonClass = document.querySelector('popup__submit-button_disabled');
-// const fieldErrorClass = document.querySelector('.elements');
 
 const validitySelectors = {
   inputSelector: '.popup__input',
@@ -142,7 +135,6 @@ function handleProfileFormSubmit(evt) {
 
 renderCards(initialCards);
 
-
 profileOpenPopupButton.addEventListener('click', openPopupProfile);
 profileAddButton.addEventListener('click', () => openPopup(popupAddElement));
 elementAddForm.addEventListener('submit', setElemntItem);
@@ -150,7 +142,6 @@ popupEditProfile.addEventListener('submit', handleProfileFormSubmit);
 popupEditProfileClose.addEventListener('click', setPopupListeners(popupEditProfile));
 popupAddElementClose.addEventListener('click', setPopupListeners(popupAddElement));
 popupImageClose.addEventListener('click', setPopupListeners(popupOpenImage));
-
 
 export { popupActive };
 
