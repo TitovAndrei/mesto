@@ -1,10 +1,10 @@
 import { Card } from './Card.js';
+import { FormValidator } from './FormValidator.js';
 
 
 const popupEditProfile = document.querySelector('.popup_edit-profile');
 const popupAddElement = document.querySelector('.popup_add-element');
 const popupOpenImage = document.querySelector('.popup_image');
-// const profileEditingForm = document.querySelector('.popup__form_profile-editing');
 const elementAddForm = document.querySelector('.popup__form_element-add');
 const nameInput = document.querySelector('.popup__field_text_name');
 const jobInput = document.querySelector('.popup__field_text_job');
@@ -17,9 +17,24 @@ const fieldName = document.querySelector('.profile__title');
 const fieldJob = document.querySelector('.profile__subtitle');
 const profileOpenPopupButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
-// const element = document.querySelector('#element').content;
 const elements = document.querySelector('.elements');
+// const inputSelector = document.querySelector('.popup__input');
+// const formSelector = document.querySelector('.popup__form');
+// const fieldSelector = document.querySelector('.popup__field');
+// const submitButtonSelector = document.querySelector('.popup__submit-button');
+// const errorSelector = document.querySelector('.popup__field-error');
+// const inactiveButtonClass = document.querySelector('popup__submit-button_disabled');
+// const fieldErrorClass = document.querySelector('.elements');
 
+const validitySelectors = {
+  inputSelector: '.popup__input',
+  formSelector: '.popup__form',
+  fieldSelector: '.popup__field',
+  submitButtonSelector: '.popup__submit-button',
+  errorSelector: '.popup__field-error',
+  inactiveButtonClass: 'popup__submit-button_disabled',
+  fieldErrorClass: 'popup__field_type_error'
+};
 
 //Начальный массив карточек
 const initialCards = [
@@ -70,6 +85,8 @@ function openPopupProfile() {
 // функция открытия popup
 function openPopup(item) {
   item.classList.add('popup_opened');
+  const validity = new FormValidator(validitySelectors, item);
+  validity.enableValidation();
   document.addEventListener('keydown', popupActive);
 }
 
@@ -125,6 +142,7 @@ function handleProfileFormSubmit(evt) {
 
 renderCards(initialCards);
 
+
 profileOpenPopupButton.addEventListener('click', openPopupProfile);
 profileAddButton.addEventListener('click', () => openPopup(popupAddElement));
 elementAddForm.addEventListener('submit', setElemntItem);
@@ -135,3 +153,7 @@ popupImageClose.addEventListener('click', setPopupListeners(popupOpenImage));
 
 
 export { popupActive };
+
+
+
+

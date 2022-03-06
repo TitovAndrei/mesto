@@ -1,70 +1,66 @@
-// Находим все формы на странице
-const enableValidation = (obj) => {
-    const formList = Array.from(document.querySelectorAll(obj.formSelector));
-    formList.forEach((formElement) => {
-        inputElement = obj.fieldSelector;
-        setEventListeners(obj, formElement, inputElement);
-    });
-};
-
-// Находим все поля на странице
-const setEventListeners = (obj, formElement, inputElement) => {
-    const fieldList = Array.from(formElement.querySelectorAll(inputElement));
-    const button = formElement.querySelector(obj.submitButtonSelector);
-    fieldList.forEach((fieldElement) => {
-        fieldElement.addEventListener('input', () => {
-            isValidate(obj, fieldElement)
-            changingButtonState(obj, button, fieldList);
+export class FormValidator {
+    constructor(obj, form) {
+        this._inputSelector = obj.inputSelector;
+        this._formSelector = obj.formSelector;
+        this._fieldSelector = obj.fieldSelector;
+        this._submitButtonSelector = obj.submitButtonSelector;
+        this._errorSelector = obj.errorSelector;
+        this._inactiveButtonClass = obj.inactiveButtonClass;
+        this._fieldErrorClass = obj.fieldErrorClass;
+        this._form = form;
+    }
+    
+    enableValidation () {
+        const fieldList = Array.from(this._form.querySelectorAll(this._inputSelector));
+        const button = this._form.querySelector(this._submitButtonSelector);
+        fieldList.forEach((fieldElement) => {
+            fieldElement.addEventListener('input', () => {
+                this._isValidate(fieldElement);
+                this._changingButtonState(button, fieldList);
+            });
         });
-    });
-};
+    };
 
-//проверяем на валидность
-const isValidate = (obj, fieldElement) => {
-    if (!fieldElement.validity.valid) {
-        markInputError(obj, fieldElement, fieldElement.validationMessage);
-    } else {
-        hideInputError(obj, fieldElement);
+    //проверяем на валидность
+    _isValidate (fieldElement) {
+        if (!fieldElement.validity) {
+           this._markInputError(fieldElement, fieldElement.validationMessage);
+         } else {
+            this._hideInputError(fieldElement);
+         }
+    };
+
+    // подсвечиваем поле не прошедшее валидацию
+    _markInputError (fieldElement, errorMessage) {
+        const popupInput = fieldElement.closest(this._inputSelector);
+        const errorElement = popupInput.querySelector(this._errorSelector);
+        errorElement.textContent = errorMessage;
+        fieldElement.classList.add(this._fieldErrorClass);
+    };
+
+    // определяем поля прошедние валидацию и показывает кнопку
+    _hideInputError (fieldElement) {
+        const popupInput = fieldElement.closest(this._inputSelector);
+        const errorElement = popupInput.querySelector(this._errorSelector);
+        errorElement.textContent = null;
+        fieldElement.classList.remove(this._fieldErrorClass);
+    };
+
+    // функция активации и деактевации кнопки 
+    _changingButtonState(button, fieldList) {
+        if (this._hasInvalidInput(fieldList)) {
+            button.classList.add(this._inactiveButtonClass);
+        } else {
+            button.classList.remove(this._inactiveButtonClass);
+        }
     }
-};
 
-// подсвечиваем поле не прошедшее валидацию
-const markInputError = (obj, fieldElement, errorMessage) => {
-    const popupInput = fieldElement.closest(obj.inputSelector);
-    const errorElement = popupInput.querySelector(obj.errorSelector);
-    errorElement.textContent = errorMessage;
-    fieldElement.classList.add(obj.fieldErrorClass);
-};
-
-// определяем поля прошедние валидацию и показывает кнопку
-const hideInputError = (obj, fieldElement) => {
-    const popupInput = fieldElement.closest(obj.inputSelector);
-    const errorElement = popupInput.querySelector(obj.errorSelector);
-    errorElement.textContent = null;
-    fieldElement.classList.remove(obj.fieldErrorClass);
-};
-
-// функция активации и деактевации кнопки 
-function changingButtonState(obj, button, fieldList) {
-    if (hasInvalidInput(fieldList)) {
-        button.classList.add(obj.inactiveButtonClass);
-    } else {
-        button.classList.remove(obj.inactiveButtonClass);
+    _hasInvalidInput(fieldList) {
+        return fieldList.some((inputElement) => {
+            console.log(inputElement);
+            return !inputElement.validity;
+            
+        })
     }
-}
 
-function hasInvalidInput(fieldList) {
-    return fieldList.some((inputElement) => {
-        return !inputElement.validity.valid;
-    })
 }
-
-enableValidation({
-    inputSelector: '.popup__input',
-    formSelector: '.popup__form',
-    fieldSelector: '.popup__field',
-    submitButtonSelector: '.popup__submit-button',
-    errorSelector: '.popup__field-error',
-    inactiveButtonClass: 'popup__submit-button_disabled',
-    fieldErrorClass: 'popup__field_type_error'
-});
