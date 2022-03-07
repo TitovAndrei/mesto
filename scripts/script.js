@@ -1,7 +1,7 @@
 import { Card } from './Card.js';
 import { FormValidator } from './FormValidator.js';
 
-
+const popups = document.querySelectorAll('.popup')
 const popupEditProfile = document.querySelector('.popup_edit-profile');
 const popupAddElement = document.querySelector('.popup_add-element');
 const popupOpenImage = document.querySelector('.popup_image');
@@ -18,6 +18,7 @@ const fieldJob = document.querySelector('.profile__subtitle');
 const profileOpenPopupButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
 const elements = document.querySelector('.elements');
+const cardTemplate = document.getElementById('element');
 
 const validitySelectors = {
   inputSelector: '.popup__input',
@@ -57,12 +58,29 @@ const initialCards = [
   }
 ];
 
+function popupValidation(item) {
+  const validity = new FormValidator(validitySelectors, item);
+  validity.enableValidation();
+}
+
+function resetValidation(item) {
+  const validity = new FormValidator(validitySelectors, item);
+  validity.resetValidation();
+}
+
 // добавление карточек на страницу из начального массива при загрузке
-function renderCards(item) {
+function renderCards(cards) {
+  elements.prepend(cards);
+}
+
+
+
+function createCard(item) {
   item.forEach((cards) => {
-    const card = new Card(cards.name, cards.link);
+    cards.template = cardTemplate;
+    const card = new Card(cards.name, cards.link, cards.template);
     const cardElement = card.generateCard();
-    elements.prepend(cardElement);
+    return renderCards(cardElement);
   });
 }
 
@@ -70,39 +88,40 @@ function renderCards(item) {
 function openPopupProfile() {
   nameInput.value = fieldName.textContent;
   jobInput.value = fieldJob.textContent;
-  const button = popupEditProfile.querySelector('.popup__submit-button');
-  button.classList.remove('popup__submit-button_disabled');
   openPopup(popupEditProfile);
 }
 
 // функция открытия popup
 function openPopup(item) {
+  resetValidation(item);
   item.classList.add('popup_opened');
-  const validity = new FormValidator(validitySelectors, item);
-  validity.enableValidation();
-  document.addEventListener('keydown', popupActive);
+  document.addEventListener('keydown', handleEscapeKey);
 }
 
 //функция закрытия popup
 function closePopup(item) {
   item.classList.remove('popup_opened');
-  document.removeEventListener('keydown', popupActive);
+  document.removeEventListener('keydown', handleEscapeKey);
 }
 
 // функция определения элемента закрывающего popup
-function setPopupListeners(item) {
-  item.addEventListener('click', (evt) => {
-    if (evt.target.classList.contains('popup') ||
-      evt.target.classList.contains('popup__close-icon')) {
-      closePopup(item);
-    }
-  });
+function setPopupListeners() {
+  popups.forEach((popup) => {
+    popup.addEventListener('mousedown', (evt) => {
+      if (evt.target.classList.contains('popup_opened')) {
+        closePopup(popup)
+      }
+      if (evt.target.classList.contains('popup__close-icon')) {
+        closePopup(popup)
+      }
+    })
+  })
 }
 
 //функция закрытия popup по клавише Escape
-const popupActive = (evt) => {
-  const popup = document.querySelector('.popup_opened');
+const handleEscapeKey = (evt) => {
   if (evt.key === 'Escape') {
+    const popup = document.querySelector('.popup_opened');
     closePopup(popup);
   }
 }
@@ -115,13 +134,10 @@ function setElemntItem(evt) {
       name: titleInput.value,
       link: imageInput.value
     }];
-  renderCards(cardData);
-  titleInput.value = null;
-  imageInput.value = null;
+  createCard(cardData);
+  evt.target.reset();
   const item = evt.target.closest('.popup_opened');
   closePopup(item);
-  const addButton = item.querySelector('.popup__submit-button_element');
-  addButton.classList.add('popup__submit-button_disabled');
 }
 
 //функция сохранения новых значений профиля
@@ -133,7 +149,9 @@ function handleProfileFormSubmit(evt) {
   closePopup(item);
 }
 
-renderCards(initialCards);
+createCard(initialCards);
+popupValidation(popupEditProfile);
+popupValidation(popupAddElement);
 
 profileOpenPopupButton.addEventListener('click', openPopupProfile);
 profileAddButton.addEventListener('click', () => openPopup(popupAddElement));
@@ -143,8 +161,4 @@ popupEditProfileClose.addEventListener('click', setPopupListeners(popupEditProfi
 popupAddElementClose.addEventListener('click', setPopupListeners(popupAddElement));
 popupImageClose.addEventListener('click', setPopupListeners(popupOpenImage));
 
-export { popupActive };
-
-
-
-
+export {openPopup}

@@ -8,16 +8,17 @@ export class FormValidator {
         this._inactiveButtonClass = obj.inactiveButtonClass;
         this._fieldErrorClass = obj.fieldErrorClass;
         this._form = form;
+        this._fieldList = Array.from(this._form.querySelectorAll(this._fieldSelector));
+        this._inputList = Array.from(this._form.querySelectorAll(this._inputSelector));
+        this._button = this._form.querySelector(this._submitButtonSelector);
     }
 
     //запускаем валидацию
     enableValidation() {
-        const fieldList = Array.from(this._form.querySelectorAll(this._fieldSelector));
-        const button = this._form.querySelector(this._submitButtonSelector);
-        fieldList.forEach((fieldElement) => {
+        this._fieldList.forEach((fieldElement) => {
             fieldElement.addEventListener('input', () => {
                 this._isValidate(fieldElement);
-                this._changingButtonState(button, fieldList);
+                this._changingButtonState(this._button, this._fieldList);
             });
         });
     };
@@ -54,6 +55,13 @@ export class FormValidator {
         } else {
             button.classList.remove(this._inactiveButtonClass);
         }
+    }
+
+    resetValidation() {
+        this._changingButtonState(this._button, this._fieldList);
+        this._inputList.forEach((inputElement) => {
+            this._hideInputError(inputElement)
+        });
     }
 
     _hasInvalidInput(fieldList) {

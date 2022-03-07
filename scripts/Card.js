@@ -1,18 +1,16 @@
-import { popupActive } from "./script.js";
+import {openPopup} from './script.js';
 
 export class Card {
 
-    constructor(name, link, cardSelector) {
+    constructor(name, link, template) {
         this._name = name;
         this._link = link;
-        this._cardSelector = cardSelector;
+        this._template = template;
     }
 
     _getTemplate() {
-        const cardElement = document
-            .getElementById('element')
+        const cardElement = this._template
             .content
-            .querySelector('.element')
             .cloneNode(true);
 
         return cardElement;
@@ -20,38 +18,39 @@ export class Card {
 
     generateCard() {
         this._element = this._getTemplate();
-        this._setCardListeners();
-        this._element.querySelector('.element__mask-group').src = this._link;
+        this._elementMaskGroup = this._element.querySelector('.element__mask-group');
+        this._elementMaskGroup.src = this._link;
+        this._elementMaskGroup.alt = this._name;
         this._element.querySelector('.element__title').textContent = this._name;
-
+        this._setCardListeners();
         return this._element;
     }
 
-    // обработка лайка, удаления карточки и сохранения новой карточки
     _setCardListeners() {
-        this._element.querySelector('.element__del').addEventListener('click', () => { this._elementDelete() });
-        this._element.querySelector('.element__group').addEventListener('click', () => { this._elementGroup() });
-        this._element.querySelector('.element__mask-group').addEventListener('click', () => { this._openElementMaskGroup() });
+        this._cardSelector = this._element.querySelector('.element');
+        this._elementGroupActive = this._cardSelector.querySelector('.element__group');
+        this._imagePopup = document.querySelector('.popup_image');
+        this._popupTitle = document.querySelector('.popup__image-title');
+        this._popupImage = document.querySelector('.popup__image');
+        
+        this._cardSelector.querySelector('.element__del').addEventListener('click', () => { this._elementDelete() });
+        this._elementGroupActive.addEventListener('click', () => { this._elementGroup() });
+        this._elementMaskGroup.addEventListener('click', () => { this._openElementMaskGroup() });
     }
 
     _elementDelete() {
-        this._element.closest('.element').remove();
+        this._cardSelector.remove();
     }
 
     _elementGroup() {
-        this.elementGroup = this._element.querySelector('.element__group');
-        this.elementGroup.classList.toggle('element__group_active');
+        this._elementGroupActive.classList.toggle('element__group_active');
     }
 
     _openElementMaskGroup() {
-        this.popupTitle = document.querySelector('.popup__image-title');
-        this.popupImage = document.querySelector('.popup__image');
-        this.popupImage.src = this._link;
-        this.popupImage.alt = this._name;
-        this.popupTitle.textContent = this._name;
-        this._cardSelector = document.querySelector('.popup_image');
-        this._cardSelector.classList.add('popup_opened');
-        document.addEventListener('keydown', popupActive);
+        this._popupImage.src = this._link;
+        this._popupImage.alt = this._name;
+        this._popupTitle.textContent = this._name;
+        this._imagePopup.classList.add('popup_opened');
+        document.addEventListener('keydown', openPopup);
     }
-
 }
