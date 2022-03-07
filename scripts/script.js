@@ -73,8 +73,6 @@ function renderCards(cards) {
   elements.prepend(cards);
 }
 
-
-
 function createCard(item) {
   item.forEach((cards) => {
     cards.template = cardTemplate;
@@ -89,11 +87,16 @@ function openPopupProfile() {
   nameInput.value = fieldName.textContent;
   jobInput.value = fieldJob.textContent;
   openPopup(popupEditProfile);
+  resetValidation(popupEditProfile);
+}
+
+function openPopupAdd() {
+  openPopup(popupAddElement);
+  resetValidation(popupAddElement);
 }
 
 // функция открытия popup
 function openPopup(item) {
-  resetValidation(item);
   item.classList.add('popup_opened');
   document.addEventListener('keydown', handleEscapeKey);
 }
@@ -154,7 +157,7 @@ popupValidation(popupEditProfile);
 popupValidation(popupAddElement);
 
 profileOpenPopupButton.addEventListener('click', openPopupProfile);
-profileAddButton.addEventListener('click', () => openPopup(popupAddElement));
+profileAddButton.addEventListener('click', openPopupAdd);
 elementAddForm.addEventListener('submit', setElemntItem);
 popupEditProfile.addEventListener('submit', handleProfileFormSubmit);
 popupEditProfileClose.addEventListener('click', setPopupListeners(popupEditProfile));

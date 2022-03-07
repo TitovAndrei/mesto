@@ -51,6 +51,6 @@ export class Card {
         this._popupImage.alt = this._name;
         this._popupTitle.textContent = this._name;
         this._imagePopup.classList.add('popup_opened');
-        document.addEventListener('keydown', openPopup);
+        openPopup(this._imagePopup);
     }
 }
