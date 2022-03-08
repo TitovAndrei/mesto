@@ -172,5 +172,3 @@ profileOpenPopupButton.addEventListener('click', openPopupProfile);
 profileAddButton.addEventListener('click', openPopupAdd);
 elementAddForm.addEventListener('submit', setElemntItem);
 popupEditProfile.addEventListener('submit', handleProfileFormSubmit);
-
-export { openPopup }
