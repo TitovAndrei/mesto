@@ -9,6 +9,10 @@ const profileAddButton = document.querySelector('.profile__add-button');
 const fieldName = document.querySelector('.profile__title');
 const fieldJob = document.querySelector('.profile__subtitle');
 
+const imagePopup = document.querySelector('.popup_image');
+const popupTitle = imagePopup.querySelector('.popup__image-title');
+const popupImage = imagePopup.querySelector('.popup__image');
+
 const popupEditProfile = document.querySelector('.popup_edit-profile');
 const nameInput = popupEditProfile.querySelector('.popup__field_text_name');
 const jobInput = popupEditProfile.querySelector('.popup__field_text_job');
@@ -84,8 +88,7 @@ function renderCards(cards) {
 
 function createCard(cardElement) {
   const card = new Card(cardElement.name, cardElement.link, cardTemplate, handleCardClick);
-  cardElement = card.generateCard();
-  return cardElement;
+  return card.generateCard();
 }
 
 // popup редактирование профиля
@@ -159,10 +162,10 @@ function handleProfileFormSubmit(evt) {
 }
 
 function handleCardClick(name, link) {
-  this._popupImage.src = this._link;
-  this._popupImage.alt = this._name;
-  this._popupTitle.textContent = this._name;
-  openPopup(this._imagePopup);
+  popupImage.src = link;
+  popupImage.alt = name;
+  popupTitle.textContent = this._name;
+  openPopup(imagePopup);
 }
 
 renderCards(initialCards);

@@ -35,16 +35,16 @@ export class Card {
     }
 
     _setCardListeners() {
-        this._cardSelector = this._element.querySelector('.element');
-        this._elementGroupActive = this._cardSelector.querySelector('.element__group');
+        this._cardElement = this._element.querySelector('.element');
+        this._elementGroupActive = this._cardElement.querySelector('.element__group');
 
-        this._cardSelector.querySelector('.element__del').addEventListener('click', () => { this._elementDelete() });
+        this._cardElement.querySelector('.element__del').addEventListener('click', () => { this._elementDelete() });
         this._elementGroupActive.addEventListener('click', () => { this._elementGroup() });
         this._elementMaskGroup.addEventListener('click', () => { this._handleCardClick(this._name, this._link)});
     }
 
     _elementDelete() {
-        this._cardSelector.remove();
+        this._cardElement.remove();
     }
 
     _elementGroup() {
