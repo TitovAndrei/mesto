@@ -1,5 +1,3 @@
-const popupTitle = document.querySelector('.popup__image-title');
-const popupImage = document.querySelector('.popup__image');
 const imagePopup = document.querySelector('.popup_image');
 
 export class Card {
@@ -9,8 +7,6 @@ export class Card {
         this._link = link;
         this._template = template;
         this._imagePopup = imagePopup;
-        this._popupTitle = popupTitle;
-        this._popupImage = popupImage;
         this._handleCardClick = handleCardClick;
 
     }
@@ -30,7 +26,6 @@ export class Card {
         this._elementMaskGroup.alt = this._name;
         this._element.querySelector('.element__title').textContent = this._name;
         this._setCardListeners();
-
         return this._element;
     }
 
@@ -40,7 +35,7 @@ export class Card {
 
         this._cardElement.querySelector('.element__del').addEventListener('click', () => { this._elementDelete() });
         this._elementGroupActive.addEventListener('click', () => { this._elementGroup() });
-        this._elementMaskGroup.addEventListener('click', () => { this._handleCardClick(this._name, this._link)});
+        this._elementMaskGroup.addEventListener('click', () => { this._handleCardClick(this._imagePopup, this._name, this._link) });
     }
 
     _elementDelete() {
