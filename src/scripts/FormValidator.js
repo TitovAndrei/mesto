@@ -56,8 +56,8 @@ export class FormValidator {
     resetValidation() {
         this._changingButtonState(this._button, this._fieldList);
         this._fieldList.forEach((inputElement) => {
-            if(inputElement.value != '') {
-                this._isValidate(inputElement);  
+            if (inputElement.value != '') {
+                this._isValidate(inputElement);
             }
         });
     }

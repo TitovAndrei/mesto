@@ -15,7 +15,6 @@ export class Card {
         const cardElement = this._template
             .content
             .cloneNode(true);
-
         return cardElement;
     }
 
@@ -32,7 +31,6 @@ export class Card {
     _setCardListeners() {
         this._cardElement = this._element.querySelector('.element');
         this._elementGroupActive = this._cardElement.querySelector('.element__group');
-
         this._cardElement.querySelector('.element__del').addEventListener('click', () => { this._elementDelete() });
         this._elementGroupActive.addEventListener('click', () => { this._elementGroup() });
         this._elementMaskGroup.addEventListener('click', () => { this._handleCardClick(this._imagePopup, this._name, this._link) });

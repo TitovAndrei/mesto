@@ -5,19 +5,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mesto Russia</title>
-  <link rel="stylesheet" href="./pages/index.css">
 </head>
 
 <body class="body">
   <div class="page">
 
     <header class="header">
-      <img src="images/logo.svg" alt="Логотип социальной сети Место" class="header__logo">
+      <img src="<%=require('./images/logo.svg')%>" alt="Логотип социальной сети Место" class="header__logo">
     </header>
 
     <main class="content">
       <section class="profile">
-        <img src="images/Avatar.png" alt="Фото владельца аккаунта" class="profile__image">
+        <img src="<%=require('./images/Avatar.png')%>" alt="Фото владельца аккаунта" class="profile__image">
         <div class="profile__info">
           <h1 class="profile__title">Жак-Ив Кусто</h1>
           <button class="profile__edit-button" type="button" aria-label="Кнопка редактирование профиля"></button>
@@ -97,7 +96,6 @@
       <p class="popup__image-title"></p>
     </div>
   </div>
-  <script type="module" src="./scripts/script.js"></script>
 </body>
 
 </html>

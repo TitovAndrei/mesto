@@ -1,12 +1,12 @@
-import { Card } from './Card.js';
-import { FormValidator } from './FormValidator.js';
-import { Section } from './Section.js';
-import { Popup } from './Popup.js';
-import { PopupWithImage } from './PopupWithImage.js';
-import { PopupWithForm } from './PopupWithForm.js';
-import { UserInfo } from './UserInfo.js';
+import './index.css';
+import { Card } from '../scripts/Card.js';
+import { FormValidator } from '../scripts/FormValidator.js';
+import { Section } from '../scripts/Section.js';
+import { Popup } from '../scripts/Popup.js';
+import { PopupWithImage } from '../scripts/PopupWithImage.js';
+import { PopupWithForm } from '../scripts/PopupWithForm.js';
+import { UserInfo } from '../scripts/UserInfo.js';
 
-const cardTemplate = document.getElementById('element');
 const profileOpenPopupButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
 const fieldName = document.querySelector('.profile__title');
@@ -58,7 +58,7 @@ const formValidators = {
   popupAddElement
 }
 
-const userInfo = new UserInfo({name: fieldName, job: fieldJob});
+const userInfo = new UserInfo({ name: fieldName, job: fieldJob });
 
 
 // Включение валидации
@@ -75,12 +75,12 @@ const enableValidation = (validitySelectors) => {
 enableValidation(validitySelectors);
 
 function renderCards(cards) {
-  const section = new Section(cards, createCard, 'element');
+  const section = new Section({ items: cards, renderer: createCard }, 'element');
   return section.renderer();
 }
 
-function createCard(cardElement) {
-  const card = new Card(cardElement.name, cardElement.link, cardTemplate, handleCardClick);
+function createCard(name, link, container) {
+  const card = new Card(name, link, container, handleCardClick);
   return card.generateCard();
 }
 
@@ -90,7 +90,7 @@ function openPopupProfile() {
     {
       selectorPopup: popupEditProfile,
       handleForm: (inputValues) => {
-        userInfo.setUserInfo({name: inputValues.field_name, job: inputValues.field_job})
+        userInfo.setUserInfo({ name: inputValues.field_name, job: inputValues.field_job });
         closePopup(popupEditProfile);
       }
     });
@@ -103,13 +103,15 @@ function openPopupAdd() {
     {
       selectorPopup: popupAddElement,
       handleForm: (inputValues) => {
-        const cardData =
-          [{
-            name: inputValues.field_title,
-            link: inputValues.field_image
-          }];
-        renderCards(cardData);
-        closePopup(popupAddElement);
+        if (inputValues.field_title != '' || inputValues.field_image != '') {
+          const cardData =
+            [{
+              name: inputValues.field_title,
+              link: inputValues.field_image
+            }];
+          renderCards(cardData);
+          popupWithForm.close();
+        }
       }
     });
   formValidators['element-add-form'].resetValidation();
