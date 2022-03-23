@@ -1,7 +1,7 @@
 const profileOpenPopupButton = document.querySelector('.profile__edit-button');
 const profileAddButton = document.querySelector('.profile__add-button');
-const fieldName = document.querySelector('.profile__title');
-const fieldJob = document.querySelector('.profile__subtitle');
+const fieldName = document.querySelector('.popup__field_text_name');
+const fieldJob = document.querySelector('.popup__field_text_job');
 const popupEditProfile = document.querySelector('.popup_edit-profile');
 const popupAddElement = document.querySelector('.popup_add-element');
 

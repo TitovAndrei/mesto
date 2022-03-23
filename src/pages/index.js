@@ -6,7 +6,10 @@ import { Popup } from '../scripts/Popup.js';
 import { PopupWithImage } from '../scripts/PopupWithImage.js';
 import { PopupWithForm } from '../scripts/PopupWithForm.js';
 import { UserInfo } from '../scripts/UserInfo.js';
-import { profileOpenPopupButton, profileAddButton, fieldName, fieldJob, popupEditProfile, popupAddElement, validitySelectors, initialCards, formValidators, userInformation }
+import {
+  profileOpenPopupButton, profileAddButton, fieldName, fieldJob,
+  popupEditProfile, popupAddElement, validitySelectors, initialCards, formValidators, userInformation
+}
   from '../utils/constants.js';
 
 
@@ -37,17 +40,22 @@ function createCard(name, link, container) {
 // popup редактирование профиля
 function openPopupProfile() {
   const userInfo = new UserInfo(userInformation);
-  userInfo.setUserInfo(userInfo.getUserInfo());
+  getProfileInfo(userInfo.getUserInfo());
   const popupWithForm = new PopupWithForm(
     {
       selectorPopup: popupEditProfile,
       handleForm: (inputValues) => {
         userInfo.setUserInfo({ name: inputValues.field_name, job: inputValues.field_job });
-        closePopup(popupEditProfile);
+        popupWithForm.close(popupEditProfile);
       }
     });
   formValidators['profile-editing-form'].resetValidation();
   return popupWithForm.open();
+}
+
+function getProfileInfo(obj) {
+  fieldName.value = obj.name;
+  fieldJob.value = obj.job;
 }
 
 function openPopupAdd() {
@@ -66,12 +74,6 @@ function openPopupAdd() {
     });
   formValidators['element-add-form'].resetValidation();
   return popupWithForm.open();
-}
-
-//функция закрытия popup
-function closePopup(item) {
-  const popup = new Popup(item);
-  return popup.close();
 }
 
 function handleCardClick(item, name, link) {

@@ -36,6 +36,6 @@ export class PopupWithForm extends Popup {
             evt.preventDefault();
             this._handleForm(this._getInputValues());
         }, { once: true });
-        this._formAdd.reset();
+        this._form.reset();
     }
 }
