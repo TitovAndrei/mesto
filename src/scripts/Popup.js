@@ -16,17 +16,14 @@ export class Popup {
 
     _handleEscClose = (evt) => {
         if (evt.key === 'Escape') {
-            this.close(this._selectorPopup);
+            this.close();
         }
     }
 
     _setEventListeners() {
         this._selectorPopup.addEventListener('mousedown', (evt) => {
-            if (evt.target.classList.contains('popup_opened')) {
-                this.close(this._selectorPopup);
-            }
-            if (evt.target.classList.contains('popup__close-icon')) {
-                this.close(this._selectorPopup);
+            if (evt.target.classList.contains('popup_opened') || evt.target.classList.contains('popup__close-icon')) {
+                this.close();
             }
         });
     }
