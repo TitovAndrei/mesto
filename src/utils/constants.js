@@ -5,6 +5,10 @@ const fieldJob = document.querySelector('.popup__field_text_job');
 const popupEditProfile = document.querySelector('.popup_edit-profile');
 const popupAddElement = document.querySelector('.popup_add-element');
 
+const popupEditProfileSelector = '.popup_edit-profile';
+const popupAddElementSelector = '.popup_add-element';
+const popupImageSelector = '.popup_image';
+
 const userInformation = {
   nameSelector: '.profile__title',
   jobSelector: '.profile__subtitle'
@@ -53,4 +57,6 @@ const formValidators = {
   popupAddElement
 }
 
-export { profileOpenPopupButton, profileAddButton, fieldName, fieldJob, popupEditProfile, popupAddElement, validitySelectors, initialCards, formValidators, userInformation } 
+export { profileOpenPopupButton, profileAddButton, fieldName, fieldJob, popupEditProfile, 
+  popupAddElement, validitySelectors, initialCards, formValidators, userInformation,
+  popupEditProfileSelector, popupAddElementSelector, popupImageSelector  } 
