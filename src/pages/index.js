@@ -28,6 +28,7 @@ const userInfo = new UserInfo(userInformation);
 // загрузка карточек с сервера
 api.getInitialCards()
   .then(res => {
+    console.log(res)
     res.forEach((cards) => {
       const cardsElrments =
         [{

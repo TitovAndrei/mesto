@@ -27,7 +27,7 @@ export class Card {
         this._elementMaskGroup.src = this._link;
         this._elementMaskGroup.alt = this._name;
         this._elementGroupNumber = this._element.querySelector('.element__group_number');
-        this._elementGroupNumber.textContent = this._likes.length + 1;
+        this._elementGroupNumber.textContent = this._likes.length;
         this._element.querySelector('.element__title').textContent = this._name;
         this._setCardListeners();
         return this._element;
@@ -53,12 +53,12 @@ export class Card {
     _elementGroup() {
         if(this._elementGroupActive.classList.contains('element__group_active')){
             this._elementGroupActive.classList.remove('element__group_active');
-            this._elementGroupNumber.textContent = this._likes.length + 1;
+            this._elementGroupNumber.textContent = this._likes.length;
             this._likesDelete(this._cardId);
         }
         else {
             this._elementGroupActive.classList.add('element__group_active');
-            this._elementGroupNumber.textContent = this._likes.length + 2;
+            this._elementGroupNumber.textContent = this._likes.length + 1;
             this._likesAdd(this._cardId);
         }
         
