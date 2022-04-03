@@ -1,0 +1,11 @@
+.element__group_number {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    text-align: center;
+    color: #000000;
+    position: absolute;
+    top: 31px;
+    left: 42px;
+}
