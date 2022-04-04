@@ -1,17 +1,31 @@
 export class Card {
 
-    constructor(name, link, templateSelector, handleCardClick, openPopupDeleteElement, cardId, likes, owner, likesAdd, likesDelete) {
+    constructor(data) {
+        const {
+            card: {
+                name,
+                link,
+                cardId,
+                likes,
+                owner,
+              },
+            miUserId,
+            templateSelector,
+            handleCardClick,
+            likesAdd,
+            likesDelete,
+            handleDeleteCardClick } = data
         this._name = name;
         this._link = link;
-        this._template = document.getElementById(templateSelector);
-        this._handleCardClick = handleCardClick;
         this._cardId = cardId;
         this._likes = likes;
         this._owner = owner;
+        this._miUserId = miUserId;
+        this._template = document.getElementById(templateSelector);
+        this._handleCardClick = handleCardClick;
         this._likesAdd = likesAdd;
         this._likesDelete = likesDelete;
-        this._openPopupDeleteElement = openPopupDeleteElement;
-        this._imagePopup = document.querySelector('.popup_image');
+        this._handleDeleteCardClick = handleDeleteCardClick;
     }
 
     _getTemplate() {
@@ -37,21 +51,20 @@ export class Card {
         this._cardElement = this._element.querySelector('.element');
         this._elementGroupActive = this._cardElement.querySelector('.element__group');
         this._elementGroupActive.addEventListener('click', () => this._elementGroup());
-        this._elementMaskGroup.addEventListener('click', () => this._handleCardClick(this._imagePopup, this._name, this._link));
-        if(this._owner._id === 'fb05724e2386ced214c2adf8'){
+        this._elementMaskGroup.addEventListener('click', () => this._handleCardClick(this._name, this._link));
+        if (this._owner._id === this._miUserId) {
             this._delIcon = this._cardElement.querySelector('.element__del');
             this._delIcon.classList.remove('element__del_disabeled')
-            this._delIcon.addEventListener('click', () => this._openPopupDeleteElement(this._cardId));
+            this._delIcon.addEventListener('click', () => this._handleDeleteCardClick(this._cardId, this._cardElement));
         }
-
     }
 
-    elementDelete() {
+     elementDelete() {
         this._cardElement.remove();
-    }
+     }
 
     _elementGroup() {
-        if(this._elementGroupActive.classList.contains('element__group_active')){
+        if (this._elementGroupActive.classList.contains('element__group_active')) {
             this._elementGroupActive.classList.remove('element__group_active');
             this._elementGroupNumber.textContent = this._likes.length;
             this._likesDelete(this._cardId);
@@ -61,7 +74,7 @@ export class Card {
             this._elementGroupNumber.textContent = this._likes.length + 1;
             this._likesAdd(this._cardId);
         }
-        
+
     }
 
 }

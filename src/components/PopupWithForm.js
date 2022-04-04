@@ -23,7 +23,6 @@ export class PopupWithForm extends Popup {
     }
 
     savesForm(){
-        console.log(this._buttomSubmit);
         this._buttomSubmit.textContent = 'Сохранение...'
 
     }
