@@ -1,7 +1,7 @@
 import { Popup } from "./Popup";
 
 export class PopupWithConfirmation extends Popup {
-    constructor ({selectorPopup, handleForm}){
+    constructor({ selectorPopup, handleForm }) {
         super(selectorPopup);
         this._handleForm = handleForm;
         this._form = this._popup.querySelector('.popup__form');
@@ -11,8 +11,8 @@ export class PopupWithConfirmation extends Popup {
         this._cardId = cardId;
         this._cardElement = cardElement;
     }
-    
-    setEventListeners(){
+
+    setEventListeners() {
         super.setEventListeners()
         this._form.addEventListener('submit', (evt) => {
             evt.preventDefault();
@@ -20,7 +20,7 @@ export class PopupWithConfirmation extends Popup {
         });
     }
 
-    close(){
+    close() {
         super.close();
         this._form.removeEventListener('submit', (evt) => {
             evt.preventDefault();

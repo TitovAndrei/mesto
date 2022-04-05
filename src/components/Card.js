@@ -8,7 +8,7 @@ export class Card {
                 cardId,
                 likes,
                 owner,
-              },
+            },
             miUserId,
             templateSelector,
             handleCardClick,
@@ -43,13 +43,22 @@ export class Card {
         this._elementGroupNumber = this._element.querySelector('.element__group_number');
         this._elementGroupNumber.textContent = this._likes.length;
         this._element.querySelector('.element__title').textContent = this._name;
+        this._cardElement = this._element.querySelector('.element');
+        this._elementGroupActive = this._cardElement.querySelector('.element__group');
+        this._likeSearch(this._likes, this._miUserId);
         this._setCardListeners();
         return this._element;
     }
 
+    _likeSearch(arr, elem) {
+        arr.forEach(element => {
+            if (element._id === elem) {
+                this._elementGroupActive.classList.add('element__group_active');
+            }
+        });
+    }
+
     _setCardListeners() {
-        this._cardElement = this._element.querySelector('.element');
-        this._elementGroupActive = this._cardElement.querySelector('.element__group');
         this._elementGroupActive.addEventListener('click', () => this._elementGroup());
         this._elementMaskGroup.addEventListener('click', () => this._handleCardClick(this._name, this._link));
         if (this._owner._id === this._miUserId) {
@@ -59,19 +68,19 @@ export class Card {
         }
     }
 
-     elementDelete() {
+    elementDelete() {
         this._cardElement.remove();
-     }
+    }
 
     _elementGroup() {
         if (this._elementGroupActive.classList.contains('element__group_active')) {
             this._elementGroupActive.classList.remove('element__group_active');
-            this._elementGroupNumber.textContent = this._likes.length;
+            this._elementGroupNumber.textContent = --this._likes.length;
             this._likesDelete(this._cardId);
         }
         else {
             this._elementGroupActive.classList.add('element__group_active');
-            this._elementGroupNumber.textContent = this._likes.length + 1;
+            this._elementGroupNumber.textContent = ++this._likes.length;
             this._likesAdd(this._cardId);
         }
 

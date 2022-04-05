@@ -23,8 +23,6 @@ export class Api {
         link: _link
       })
     })
-      .then((res) => res.ok ? res.json() : Promise.reject(res.status))
-      .catch(console.log)
   }
 
   // удаление с сервера
@@ -39,7 +37,6 @@ export class Api {
       .catch(console.log)
   }
 
-  
   // отправляем лайк на сервер
   setLikesCards(cardId) {
     return fetch(`${this._options.baseUrl}/cards/likes/${cardId}`, {
@@ -48,7 +45,7 @@ export class Api {
     })
       .then((res) => res.ok ? res.json() : Promise.reject(res.status))
       .catch(console.log)
-  } 
+  }
 
   // получаем колличество лайков с сервера
   deleteLikesCards(cardId) {
@@ -82,8 +79,6 @@ export class Api {
         about: _about
       })
     })
-      .then((res) => res.ok ? res.json() : Promise.reject(res.status))
-      .catch(console.log)
   }
 
   // передаем на сервер аватар
@@ -95,7 +90,5 @@ export class Api {
         avatar: _avatar
       })
     })
-      .then((res) => res.ok ? res.json() : Promise.reject(res.status))
-      .catch(console.log)
   }
 }

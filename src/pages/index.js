@@ -53,10 +53,26 @@ const popupWithAvatar = new PopupWithForm(
     selectorPopup: popupEditAvatarSelector,
     handleForm: (evt, inputValues) => {
       evt.preventDefault();
+      popupWithAvatar.savesForm(true);
       api.setAvatar(inputValues.field_image)
-        .then(res => userInfo.setUserAvatar({ avatar: res.avatar }))
-      popupWithAvatar.savesForm();
-      popupWithAvatar.close();
+        .then((res) => {
+          if (res.ok) {
+            return res.json();
+          }
+          else {
+            return Promise.reject(res.status);
+          }
+        })
+        .then((res) => {
+          userInfo.setUserAvatar({ avatar: res.avatar });
+          popupWithAvatar.close();
+        })
+        .catch((res) => {
+          return Promise.reject(`Что-то пошло не так: ${res}`);
+        })
+        .finally(() => {
+          popupWithAvatar.savesForm(false);
+        })
     }
   });
 
@@ -78,10 +94,26 @@ const popupWithProfile = new PopupWithForm(
     selectorPopup: popupEditProfileSelector,
     handleForm: (evt, inputValues) => {
       evt.preventDefault();
+      popupWithProfile.savesForm(true);
       api.setProfileInformation(inputValues.name, inputValues.about)
-        .then(res => userInfo.setUserInfo({ name: res.name, about: res.about }))
-      popupWithProfile.savesForm();
-      popupWithProfile.close()
+        .then((res) => {
+          if (res.ok) {
+            return res.json();
+          }
+          else {
+            return Promise.reject(res.status);
+          }
+        })
+        .then((res) => {
+          userInfo.setUserInfo({ name: res.name, about: res.about });
+          popupWithProfile.close();
+        })
+        .catch((res) => {
+          return Promise.reject(`Что-то пошло не так: ${res}`);
+        })
+        .finally(() => {
+          popupWithProfile.savesForm(false);
+        })
     }
   });
 
@@ -140,7 +172,7 @@ const popupDeleteElement = new PopupWithConfirmation(
     handleForm: (cardId, cardElement) => {
       api.deleteInitialCards(cardId);
       popupDeleteElement.close();
-      cardElement.remove(); 
+      cardElement.remove();
     }
   });
 
@@ -168,13 +200,13 @@ function createCard(name, link, cardId, likes, owner, miUserId, templateSelector
   return card.generateCard();
 }
 
-
-
 // попап открытия карточки
+
+const popupWithImage = new PopupWithImage(popupImageSelector);
+popupWithImage.setEventListeners();
+
 function handleCardClick(name, link) {
-  const popupWithImage = new PopupWithImage(popupImageSelector, name, link);
-  popupWithImage.setEventListeners();
-  return popupWithImage.open();
+  return popupWithImage.open(name, link);
 }
 
 // простановка и удаление лайков
@@ -192,17 +224,39 @@ const popupWithElement = new PopupWithForm(
     selectorPopup: popupAddElementSelector,
     handleForm: (evt, inputValues) => {
       evt.preventDefault();
+      popupWithElement.savesForm(true);
       const cardData =
         [{
           name: inputValues.field_title,
           link: inputValues.field_image
         }];
       api.createInitialCards(cardData[0].name, cardData[0].link)
-        .then(res => {
-          renderCards([res])
+        .then((res) => {
+          if (res.ok) {
+            return res.json();
+          }
+          else {
+            return Promise.reject(res.status);
+          }
         })
-      popupWithElement.savesForm();
-      popupWithElement.close();
+        .then((res) => {
+          const cardsElrments =
+            [{
+              name: res.name,
+              link: res.link,
+              cardId: res._id,
+              likes: res.likes,
+              owner: res.owner
+            }];
+          renderCards(cardsElrments, miUserId);
+          popupWithElement.close();
+        })
+        .catch((res) => {
+          return Promise.reject(`Что-то пошло не так: ${res}`);
+        })
+        .finally(() => {
+          popupWithElement.savesForm(false);
+        })
     }
   });
 

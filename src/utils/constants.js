@@ -38,7 +38,8 @@ const formValidators = {
   popupAddElement
 }
 
-export { profileOpenPopupButton, profileAddButton, fieldName, fieldAbout, popupEditProfile, 
+export {
+  profileOpenPopupButton, profileAddButton, fieldName, fieldAbout, popupEditProfile,
   popupAddElement, validitySelectors, formValidators, userInformation,
   popupEditProfileSelector, popupAddElementSelector, popupImageSelector, profileAvatarButton,
   elementGroupNumber, popupDeleteElement, popupEditAvatar, popupDeleteElementSelector,
