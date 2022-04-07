@@ -22,14 +22,13 @@ export class PopupWithForm extends Popup {
         super.setEventListeners();
     }
 
-    savesForm(evt) {
+    renderLoading(evt) {
         if (evt) {
             this._buttomSubmit.textContent = 'Сохранение...'
         }
         else {
             this._buttomSubmit.textContent = 'Сохранить'
         }
-
     }
 
     close() {

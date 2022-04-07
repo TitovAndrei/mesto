@@ -20,11 +20,4 @@ export class PopupWithConfirmation extends Popup {
         });
     }
 
-    close() {
-        super.close();
-        this._form.removeEventListener('submit', (evt) => {
-            evt.preventDefault();
-            this._handleForm(this._cardId, this._cardElement);
-        });
-    }
 }

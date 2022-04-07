@@ -2,30 +2,24 @@ export class Card {
 
     constructor(data) {
         const {
-            card: {
-                name,
-                link,
-                cardId,
-                likes,
-                owner,
-            },
+            item,
             miUserId,
-            templateSelector,
+            element,
             handleCardClick,
-            likesAdd,
-            likesDelete,
-            handleDeleteCardClick } = data
-        this._name = name;
-        this._link = link;
-        this._cardId = cardId;
-        this._likes = likes;
-        this._owner = owner;
+            handleDeleteCardClick,
+            handleLike,
+            handleRemoveLike } = data
+        this._name = item.name;
+        this._link = item.link;
+        this._cardId = item._id;
+        this._likes = item.likes;
+        this._owner = item.owner;
         this._miUserId = miUserId;
-        this._template = document.getElementById(templateSelector);
+        this._template = document.getElementById(element);
         this._handleCardClick = handleCardClick;
-        this._likesAdd = likesAdd;
-        this._likesDelete = likesDelete;
         this._handleDeleteCardClick = handleDeleteCardClick;
+        this._handleLike = handleLike;
+        this._handleRemoveLike = handleRemoveLike;
     }
 
     _getTemplate() {
@@ -45,12 +39,12 @@ export class Card {
         this._element.querySelector('.element__title').textContent = this._name;
         this._cardElement = this._element.querySelector('.element');
         this._elementGroupActive = this._cardElement.querySelector('.element__group');
-        this._likeSearch(this._likes, this._miUserId);
+        this._searchLikes(this._likes, this._miUserId);
         this._setCardListeners();
         return this._element;
     }
 
-    _likeSearch(arr, elem) {
+    _searchLikes(arr, elem) {
         arr.forEach(element => {
             if (element._id === elem) {
                 this._elementGroupActive.classList.add('element__group_active');
@@ -59,7 +53,7 @@ export class Card {
     }
 
     _setCardListeners() {
-        this._elementGroupActive.addEventListener('click', () => this._elementGroup());
+        this._elementGroupActive.addEventListener('click', () => this._addLikes());
         this._elementMaskGroup.addEventListener('click', () => this._handleCardClick(this._name, this._link));
         if (this._owner._id === this._miUserId) {
             this._delIcon = this._cardElement.querySelector('.element__del');
@@ -68,20 +62,22 @@ export class Card {
         }
     }
 
-    elementDelete() {
-        this._cardElement.remove();
+    updateLikes(obj) {
+        this._elementGroupActive.classList.add('element__group_active');
+        this._elementGroupNumber.textContent = obj.likes.length;
     }
 
-    _elementGroup() {
+    deleteLikes(obj) {
+        this._elementGroupActive.classList.remove('element__group_active');
+        this._elementGroupNumber.textContent = obj.likes.length;
+    }
+
+    _addLikes() {
         if (this._elementGroupActive.classList.contains('element__group_active')) {
-            this._elementGroupActive.classList.remove('element__group_active');
-            this._elementGroupNumber.textContent = --this._likes.length;
-            this._likesDelete(this._cardId);
+            this._handleRemoveLike(this);
         }
         else {
-            this._elementGroupActive.classList.add('element__group_active');
-            this._elementGroupNumber.textContent = ++this._likes.length;
-            this._likesAdd(this._cardId);
+            this._handleLike(this);
         }
 
     }

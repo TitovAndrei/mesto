@@ -28,18 +28,21 @@ let miUserId;
 
 const userInfo = new UserInfo(userInformation);
 
-// загрузка информации о профиле с сревера
-api.getProfileInformation()
-  .then(res => {
+Promise.all([api.getProfileInformation(), api.getInitialCards()])
+  .then(([userData, cards]) => {
     const profileInformation =
     {
-      about: res.about,
-      avatar: res.avatar,
-      name: res.name,
-      Id: res._id
+      about: userData.about,
+      avatar: userData.avatar,
+      name: userData.name,
+      Id: userData._id
     };
     setProfile(profileInformation);
     miUserId = profileInformation.Id;
+    renderCards(cards, miUserId);
+  })
+  .catch((err) => {
+    console.log(err);
   })
 
 function setProfile(obj) {
@@ -53,25 +56,17 @@ const popupWithAvatar = new PopupWithForm(
     selectorPopup: popupEditAvatarSelector,
     handleForm: (evt, inputValues) => {
       evt.preventDefault();
-      popupWithAvatar.savesForm(true);
+      popupWithAvatar.renderLoading(true);
       api.setAvatar(inputValues.field_image)
-        .then((res) => {
-          if (res.ok) {
-            return res.json();
-          }
-          else {
-            return Promise.reject(res.status);
-          }
-        })
         .then((res) => {
           userInfo.setUserAvatar({ avatar: res.avatar });
           popupWithAvatar.close();
         })
-        .catch((res) => {
-          return Promise.reject(`Что-то пошло не так: ${res}`);
+        .catch((err) => {
+          console.log(err);
         })
         .finally(() => {
-          popupWithAvatar.savesForm(false);
+          popupWithAvatar.renderLoading(false);
         })
     }
   });
@@ -94,25 +89,17 @@ const popupWithProfile = new PopupWithForm(
     selectorPopup: popupEditProfileSelector,
     handleForm: (evt, inputValues) => {
       evt.preventDefault();
-      popupWithProfile.savesForm(true);
+      popupWithProfile.renderLoading(true);
       api.setProfileInformation(inputValues.name, inputValues.about)
-        .then((res) => {
-          if (res.ok) {
-            return res.json();
-          }
-          else {
-            return Promise.reject(res.status);
-          }
-        })
         .then((res) => {
           userInfo.setUserInfo({ name: res.name, about: res.about });
           popupWithProfile.close();
         })
-        .catch((res) => {
-          return Promise.reject(`Что-то пошло не так: ${res}`);
+        .catch((err) => {
+          console.log(err);
         })
         .finally(() => {
-          popupWithProfile.savesForm(false);
+          popupWithProfile.renderLoading(false);
         })
     }
   });
@@ -130,23 +117,6 @@ function getProfileInfo(obj) {
   fieldAbout.value = obj.about;
 }
 
-
-// загрузка карточек с сервера
-api.getInitialCards(miUserId)
-  .then(res => {
-    res.forEach((cards) => {
-      const cardsElrments =
-        [{
-          name: cards.name,
-          link: cards.link,
-          cardId: cards._id,
-          likes: cards.likes,
-          owner: cards.owner
-        }];
-      renderCards(cardsElrments, miUserId)
-    })
-  })
-
 // Включение валидации
 const enableValidation = (validitySelectors) => {
   const formList = Array.from(document.querySelectorAll(validitySelectors.formSelector))
@@ -160,42 +130,44 @@ const enableValidation = (validitySelectors) => {
 
 enableValidation(validitySelectors);
 
-// добавление карточек
-function renderCards(cards, miUserId) {
-  const section = new Section({ items: cards, miUserId, renderer: createCard }, 'element');
-  return section.renderer();
+const section = new Section(createCard);
+
+// подготовка карточек
+function renderCards(items, miUserId) {
+  return section.renderer(items, miUserId);
 }
 
+// попап удаления карточек
 const popupDeleteElement = new PopupWithConfirmation(
   {
     selectorPopup: popupDeleteElementSelector,
     handleForm: (cardId, cardElement) => {
-      api.deleteInitialCards(cardId);
-      popupDeleteElement.close();
-      cardElement.remove();
+      api.deleteInitialCards(cardId)
+        .then((res) => {
+          cardElement.remove();
+          popupDeleteElement.close();
+        })
+        .catch((err) => {
+          console.log(err);
+        })
     }
   });
 
 popupDeleteElement.setEventListeners();
 
-function createCard(name, link, cardId, likes, owner, miUserId, templateSelector) {
+// создание карточек
+function createCard(item, element, miUserId) {
   const card = new Card({
-    card: {
-      name,
-      link,
-      cardId,
-      likes,
-      owner,
-    },
+    item,
     miUserId,
-    templateSelector,
+    element,
     handleCardClick,
-    likesAdd,
-    likesDelete,
-    handleDeleteCardClick: (cardId, cardsElrment) => {
-      popupDeleteElement.submitDeletePopup(cardId, cardsElrment);
+    handleDeleteCardClick: (cardId, cardsElement) => {
+      popupDeleteElement.submitDeletePopup(cardId, cardsElement);
       popupDeleteElement.open();
-    }
+    },
+    handleLike,
+    handleRemoveLike
   });
   return card.generateCard();
 }
@@ -210,12 +182,25 @@ function handleCardClick(name, link) {
 }
 
 // простановка и удаление лайков
-function likesAdd(cardId) {
-  api.setLikesCards(cardId);
+
+function handleLike(card) {
+  api.setLikesCards(card._cardId)
+    .then((res) => {
+      card.updateLikes(res)
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
-function likesDelete(cardId) {
-  api.deleteLikesCards(cardId);
+function handleRemoveLike(card) {
+  api.deleteLikesCards(card._cardId)
+    .then((res) => {
+      card.deleteLikes(res)
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 // попап добавления карточки
@@ -224,7 +209,7 @@ const popupWithElement = new PopupWithForm(
     selectorPopup: popupAddElementSelector,
     handleForm: (evt, inputValues) => {
       evt.preventDefault();
-      popupWithElement.savesForm(true);
+      popupWithElement.renderLoading(true);
       const cardData =
         [{
           name: inputValues.field_title,
@@ -232,30 +217,23 @@ const popupWithElement = new PopupWithForm(
         }];
       api.createInitialCards(cardData[0].name, cardData[0].link)
         .then((res) => {
-          if (res.ok) {
-            return res.json();
-          }
-          else {
-            return Promise.reject(res.status);
-          }
-        })
-        .then((res) => {
-          const cardsElrments =
+          const cardsElements =
             [{
               name: res.name,
               link: res.link,
-              cardId: res._id,
+              _id: res._id,
               likes: res.likes,
               owner: res.owner
             }];
-          renderCards(cardsElrments, miUserId);
+          miUserId = res.owner._id;
+          renderCards(cardsElements, miUserId);
           popupWithElement.close();
         })
-        .catch((res) => {
-          return Promise.reject(`Что-то пошло не так: ${res}`);
+        .catch((err) => {
+          console.log(err);
         })
         .finally(() => {
-          popupWithElement.savesForm(false);
+          popupWithElement.renderLoading(false);
         })
     }
   });

@@ -1,21 +1,19 @@
-const elements = document.querySelector('.elements');
-
 export class Section {
-    constructor({ items, miUserId, renderer }, selectorElement) {
-        this._items = items;
-        this._miUserId = miUserId;
+    constructor(renderer) {
         this._renderer = renderer;
-        this._selectorElement = selectorElement;
+        this._element = 'element';
+        this._elements = document.querySelector('.elements');
     }
 
-    renderer() {
-        this._items.forEach((item) => {
-            this._cardElement = this._renderer(item.name, item.link, item.cardId, item.likes, item.owner, this._miUserId, this._selectorElement);
+    renderer(items, miUserId) {
+        this._miUserId = miUserId;
+        items.forEach((item) => {
+            this._cardElement = this._renderer(item, this._element, this._miUserId);
             return this.addItem(this._cardElement);
         });
     }
 
     addItem(cardElement) {
-        elements.prepend(cardElement);
+        this._elements.prepend(cardElement);
     }
 } 

@@ -9,8 +9,7 @@ export class Api {
     return fetch(`${this._options.baseUrl}/cards`, {
       headers: this._options.headers
     })
-      .then((res) => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
-      .catch(console.log)
+      .then(this._checkResponse)
   }
 
   // отправка на сервер
@@ -23,6 +22,7 @@ export class Api {
         link: _link
       })
     })
+      .then(this._checkResponse)
   }
 
   // удаление с сервера
@@ -33,8 +33,7 @@ export class Api {
         authorization: `${this._options.headers.authorization}`
       }
     })
-      .then((res) => res.ok ? res.json() : Promise.reject(res.status))
-      .catch(console.log)
+      .then(this._checkResponse)
   }
 
   // отправляем лайк на сервер
@@ -43,8 +42,7 @@ export class Api {
       headers: this._options.headers,
       method: "PUT"
     })
-      .then((res) => res.ok ? res.json() : Promise.reject(res.status))
-      .catch(console.log)
+      .then(this._checkResponse)
   }
 
   // получаем колличество лайков с сервера
@@ -55,8 +53,7 @@ export class Api {
         authorization: `${this._options.headers.authorization}`
       }
     })
-      .then((res) => res.ok ? res.json() : Promise.reject(res.status))
-      .catch(console.log)
+      .then(this._checkResponse)
   }
 
   // редакритование профиля
@@ -65,8 +62,7 @@ export class Api {
     return fetch(`${this._options.baseUrl}/users/me`, {
       headers: this._options.headers,
     })
-      .then((res) => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
-      .catch(console.log)
+      .then(this._checkResponse)
   }
 
   // отправка информации на сервер 
@@ -79,6 +75,7 @@ export class Api {
         about: _about
       })
     })
+      .then(this._checkResponse)
   }
 
   // передаем на сервер аватар
@@ -90,5 +87,14 @@ export class Api {
         avatar: _avatar
       })
     })
+      .then(this._checkResponse)
+  }
+
+  //общий метод результата
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка ${res.status}`);
   }
 }
