@@ -12,7 +12,7 @@ import {
   validitySelectors, formValidators, userInformation,
   popupEditProfileSelector, popupAddElementSelector, popupImageSelector,
   popupEditAvatarSelector, profileAvatarButton, popupDeleteElementSelector,
-  popupFieldTextImageAvatar
+  popupFieldTextImageAvatar, constainerSelector, element
 }
   from '../utils/constants.js';
 
@@ -130,7 +130,7 @@ const enableValidation = (validitySelectors) => {
 
 enableValidation(validitySelectors);
 
-const section = new Section(createCard);
+const section = new Section(createCard, constainerSelector);
 
 // подготовка карточек
 function renderCards(items, miUserId) {
@@ -156,7 +156,7 @@ const popupDeleteElement = new PopupWithConfirmation(
 popupDeleteElement.setEventListeners();
 
 // создание карточек
-function createCard(item, element, miUserId) {
+function createCard(item) {
   const card = new Card({
     item,
     miUserId,
@@ -184,7 +184,7 @@ function handleCardClick(name, link) {
 // простановка и удаление лайков
 
 function handleLike(card) {
-  api.setLikesCards(card._cardId)
+  api.setLikesCards(card.cardId)
     .then((res) => {
       card.updateLikes(res)
     })
@@ -194,7 +194,7 @@ function handleLike(card) {
 }
 
 function handleRemoveLike(card) {
-  api.deleteLikesCards(card._cardId)
+  api.deleteLikesCards(card.cardId)
     .then((res) => {
       card.deleteLikes(res)
     })
@@ -211,11 +211,11 @@ const popupWithElement = new PopupWithForm(
       evt.preventDefault();
       popupWithElement.renderLoading(true);
       const cardData =
-        [{
-          name: inputValues.field_title,
-          link: inputValues.field_image
-        }];
-      api.createInitialCards(cardData[0].name, cardData[0].link)
+      {
+        name: inputValues.field_title,
+        link: inputValues.field_image
+      };
+      api.createInitialCards(cardData.name, cardData.link)
         .then((res) => {
           const cardsElements =
             [{
@@ -225,8 +225,7 @@ const popupWithElement = new PopupWithForm(
               likes: res.likes,
               owner: res.owner
             }];
-          miUserId = res.owner._id;
-          renderCards(cardsElements, miUserId);
+          renderCards(cardsElements);
           popupWithElement.close();
         })
         .catch((err) => {

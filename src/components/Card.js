@@ -11,11 +11,11 @@ export class Card {
             handleRemoveLike } = data
         this._name = item.name;
         this._link = item.link;
-        this._cardId = item._id;
+        this.cardId = item._id;
         this._likes = item.likes;
         this._owner = item.owner;
         this._miUserId = miUserId;
-        this._template = document.getElementById(element);
+        this._template = element;
         this._handleCardClick = handleCardClick;
         this._handleDeleteCardClick = handleDeleteCardClick;
         this._handleLike = handleLike;
@@ -58,7 +58,7 @@ export class Card {
         if (this._owner._id === this._miUserId) {
             this._delIcon = this._cardElement.querySelector('.element__del');
             this._delIcon.classList.remove('element__del_disabeled')
-            this._delIcon.addEventListener('click', () => this._handleDeleteCardClick(this._cardId, this._cardElement));
+            this._delIcon.addEventListener('click', () => this._handleDeleteCardClick(this.cardId, this._cardElement));
         }
     }
 

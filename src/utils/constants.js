@@ -10,6 +10,8 @@ const popupEditAvatar = document.querySelector('.popup_edit-avatar');
 const elementGroupNumber = document.querySelector('.element__group_number');
 const profileImage = document.querySelector('.profile__image');
 const popupFieldTextImageAvatar = document.querySelector('.popup__field_text_image-avatar');
+const constainerSelector = document.querySelector('.elements');
+const element = document.getElementById('element');
 
 const popupEditProfileSelector = '.popup_edit-profile';
 const popupAddElementSelector = '.popup_add-element';
@@ -43,5 +45,5 @@ export {
   popupAddElement, validitySelectors, formValidators, userInformation,
   popupEditProfileSelector, popupAddElementSelector, popupImageSelector, profileAvatarButton,
   elementGroupNumber, popupDeleteElement, popupEditAvatar, popupDeleteElementSelector,
-  popupEditAvatarSelector, profileImage, popupFieldTextImageAvatar
+  popupEditAvatarSelector, profileImage, popupFieldTextImageAvatar, constainerSelector, element
 } 
